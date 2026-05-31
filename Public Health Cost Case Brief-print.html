@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>OTOS — Public Health Cost Case Brief</title>
+<meta name="viewport" content="width=794" />
+<link rel="stylesheet" href="assets/colors_and_type.css" />
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body {
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: var(--fw-body);
+    letter-spacing: var(--ls-body);
+    line-height: 1.6;
+    color: var(--otos-paper-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .doc { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 30px 0; }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 22mm 22mm;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    background: var(--otos-paper);
+    color: var(--otos-paper-ink);
+    background-image: radial-gradient(ellipse 56rem 34rem at 100% 0%, rgba(242,108,13,.06), transparent 56%);
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* Dark page variant */
+  .page.dark {
+    background: var(--otos-bg);
+    color: var(--otos-ink);
+    background-image:
+      radial-gradient(ellipse 58rem 34rem at 100% 0%, rgba(242,108,13,.18), transparent 58%),
+      radial-gradient(ellipse 48rem 30rem at 0% 100%, rgba(242,108,13,.05), transparent 60%);
+  }
+  .page.dark h1, .page.dark h2, .page.dark h3 { color: var(--otos-ink); }
+
+  .page::after {
+    content: "";
+    position: absolute;
+    right: -28px; bottom: -28px;
+    width: 240px; height: 188px;
+    background: url("assets/brain.png") right bottom / contain no-repeat;
+    opacity: .035;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page.dark::after { opacity: .05; }
+  .page > *:not(.page-foot) { position: relative; z-index: 1; }
+
+  /* ===== Typography ===== */
+  h1.title {
+    font-size: 39px; font-weight: 1000; letter-spacing: -0.034em;
+    line-height: 1.04; margin: 0 0 16px; color: var(--otos-paper-ink); max-width: 20ch;
+  }
+  .dark h1.title { color: var(--otos-ink); }
+  h2.sub { font-size: 17px; font-weight: 900; letter-spacing: -0.018em; line-height: 1.2; margin: 0 0 9px; color: var(--otos-paper-ink); }
+  p { font-size: 14.5px; line-height: 1.7; margin: 0 0 13px; color: var(--otos-paper-muted); font-weight: 550; }
+  .dark p { color: var(--otos-soft); }
+  p strong, .ink { color: var(--otos-paper-ink); font-weight: 800; }
+  .dark p strong, .dark .ink { color: var(--otos-ink); }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 10px; font-weight: 950; letter-spacing: .24em;
+    text-transform: uppercase; color: var(--otos-orange);
+    border: 1px solid rgba(242,108,13,.4); background: rgba(242,108,13,.07);
+    border-radius: 999px; padding: 7px 13px; margin-bottom: 18px;
+  }
+  .dark .kicker { color: var(--otos-orange-2); border-color: rgba(242,108,13,.5); background: rgba(242,108,13,.12); }
+  .kicker::before {
+    content: ""; display: inline-block; width: 13px; height: 11px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat; filter: saturate(.9);
+  }
+  .dark .kicker::before { filter: drop-shadow(0 0 6px rgba(242,108,13,.6)); }
+
+  /* ===== Header / footer ===== */
+  .page-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--otos-paper-muted); margin-bottom: 22px; padding-bottom: 12px;
+    border-bottom: 1px solid rgba(70,48,34,.14);
+  }
+  .dark .page-head { color: var(--otos-muted); border-bottom-color: rgba(255,255,255,.12); }
+  .who { font-weight: 900; letter-spacing: .06em; text-transform: none; font-size: 12.5px; color: var(--otos-paper-ink); }
+  .dark .who { color: var(--otos-ink); }
+  .who.brand { display: inline-flex; align-items: center; gap: 9px; }
+  .who.brand::before {
+    content: ""; width: 21px; height: 16px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat;
+    filter: drop-shadow(0 0 6px rgba(242,108,13,.45));
+  }
+
+  .page-foot {
+    position: absolute; left: 22mm; right: 22mm; bottom: 13mm;
+    display: flex; justify-content: space-between;
+    font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--otos-paper-muted); opacity: .85; z-index: 1;
+  }
+  .dark .page-foot { color: var(--otos-muted); }
+
+  /* ===== Reference block ===== */
+  .refblock {
+    border: 1px solid rgba(70,48,34,.16); border-radius: 12px; background: var(--otos-paper-2);
+    padding: 14px 16px; margin-bottom: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px 22px;
+  }
+  .refblock .row { font-size: 11.5px; line-height: 1.45; color: var(--otos-paper-muted); }
+  .refblock .row span { font-weight: 900; color: var(--otos-paper-ink); letter-spacing: .04em; }
+  .refblock .full { grid-column: 1 / -1; }
+
+  /* ===== Priorities ===== */
+  .priorities { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+  .prio {
+    display: grid; grid-template-columns: 30px 1fr; gap: 13px; align-items: baseline;
+    padding: 11px 16px; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.6));
+    border: 1px solid rgba(70,48,34,.13);
+  }
+  .prio .n { font-size: 19px; font-weight: 1000; color: var(--otos-orange); letter-spacing: -0.04em; }
+  .prio .t { font-size: 14px; line-height: 1.45; color: var(--otos-paper-ink); font-weight: 600; }
+  .prio .t b { font-weight: 900; }
+
+  /* ===== Callout ===== */
+  .callout {
+    border-radius: 14px; padding: 16px 20px; margin: 16px 0 0;
+    background: var(--otos-paper-ink); color: var(--otos-paper-2);
+    font-size: 14.5px; line-height: 1.55; font-weight: 600;
+  }
+  .callout strong { color: var(--otos-orange-2); }
+  .callout.soft {
+    background: rgba(242,108,13,.07); border: 1px solid rgba(242,108,13,.3);
+    color: var(--otos-paper-ink); font-size: 13.5px; line-height: 1.55;
+  }
+  .callout.soft strong { color: var(--otos-orange); }
+  .dark .callout.soft { background: rgba(242,108,13,.1); border-color: rgba(242,108,13,.4); color: var(--otos-ink); }
+  .dark .callout.soft strong { color: var(--otos-orange-2); }
+
+  /* ===== Ripple diagram (dark feature) ===== */
+  .ripple-top { display: grid; grid-template-columns: 168px 1fr; gap: 22px; align-items: center; margin: 4px 0 18px; }
+  .ripple-emblem { position: relative; width: 160px; height: 150px; }
+  .ripple-emblem .ring {
+    position: absolute; left: 50%; top: 58%; transform: translate(-50%,-50%);
+    border-radius: 50%; border: 2px solid var(--otos-orange-2);
+  }
+  .ripple-emblem .r1 { width: 150px; height: 150px; opacity: .16; }
+  .ripple-emblem .r2 { width: 112px; height: 112px; opacity: .28; }
+  .ripple-emblem .r3 { width: 74px; height: 74px; opacity: .5; }
+  .ripple-emblem .dot {
+    position: absolute; left: 50%; top: 58%; transform: translate(-50%,-50%);
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--otos-orange); box-shadow: 0 0 24px rgba(242,108,13,.8);
+  }
+  .ripple-head .big {
+    font-size: 46px; font-weight: 1000; letter-spacing: -0.05em; line-height: .94; color: var(--otos-orange-2);
+  }
+  .ripple-head .cap { font-size: 13px; font-weight: 700; color: var(--otos-soft); margin-top: 4px; line-height: 1.4; }
+
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .tier {
+    border-radius: 14px; padding: 13px 14px;
+    background: rgba(19,27,38,.7); border: 1px solid rgba(255,255,255,.14);
+    position: relative;
+  }
+  .tier .tn { font-size: 9px; font-weight: 950; letter-spacing: .14em; text-transform: uppercase; color: var(--otos-orange-2); margin-bottom: 5px; }
+  .tier h3 { font-size: 13.5px; font-weight: 1000; letter-spacing: -0.01em; color: var(--otos-ink); margin: 0 0 4px; line-height: 1.12; }
+  .tier .amt { font-size: 19px; font-weight: 1000; letter-spacing: -0.03em; color: var(--otos-ink); margin-bottom: 8px; }
+  .tier ul { list-style: none; margin: 0; padding: 0; }
+  .tier li { font-size: 10.5px; line-height: 1.42; color: var(--otos-soft); padding-left: 11px; position: relative; margin-bottom: 3px; }
+  .tier li::before { content: "·"; position: absolute; left: 2px; color: var(--otos-orange-2); font-weight: 900; }
+  .tier .note { margin-top: 7px; font-size: 9px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--otos-muted); }
+  .tier-arrow { display: flex; align-items: center; justify-content: center; }
+
+  .vs-band {
+    margin-top: 14px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center;
+    border-radius: 14px; padding: 14px 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12);
+  }
+  .vs-band .col { text-align: center; }
+  .vs-band .lbl { font-size: 9.5px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--otos-muted); margin-bottom: 5px; }
+  .vs-band .num { font-size: 26px; font-weight: 1000; letter-spacing: -0.04em; line-height: 1; }
+  .vs-band .num.bench { color: var(--otos-soft); }
+  .vs-band .num.full { color: var(--otos-orange-2); }
+  .vs-band .sub { font-size: 9.5px; color: var(--otos-muted); margin-top: 5px; line-height: 1.35; font-weight: 600; }
+  .vs-band .vs { width: 40px; height: 40px; border-radius: 50%; background: var(--otos-orange); color: #fff; font-size: 12px; font-weight: 1000; display: flex; align-items: center; justify-content: center; }
+
+  .nation-strip {
+    margin-top: 12px; border-radius: 14px; padding: 14px 20px;
+    background: linear-gradient(100deg, rgba(242,108,13,.16), rgba(242,108,13,.05));
+    border: 1.5px solid rgba(242,108,13,.5);
+    font-size: 16px; font-weight: 800; letter-spacing: -0.018em; color: var(--otos-ink); line-height: 1.4;
+  }
+  .nation-strip strong { color: var(--otos-orange-2); font-weight: 1000; }
+
+  /* ===== Stat / number tables ===== */
+  .num-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; margin-top: 10px; }
+  .num-grid.four { grid-template-columns: repeat(4, 1fr); }
+  .ncard {
+    border-radius: 14px; padding: 14px 15px;
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.62));
+    border: 1px solid rgba(70,48,34,.14);
+  }
+  .ncard .num { font-size: 27px; font-weight: 1000; letter-spacing: -0.045em; line-height: 1; color: var(--otos-orange); margin-bottom: 6px; }
+  .ncard .desc { font-size: 11px; line-height: 1.4; color: var(--otos-paper-muted); font-weight: 600; }
+  .ncard .tag { display: block; margin-top: 7px; font-size: 8px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--otos-orange); opacity: .85; }
+  .ncard .tag.modelled { color: #9a7b3a; }
+  .ncard .tag.local { color: #4a7c59; }
+
+  /* forecast cards */
+  .forecast { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; margin-top: 10px; }
+  .fcard { border-radius: 14px; padding: 14px 15px; text-align: center; border: 1px solid rgba(70,48,34,.14); background: rgba(242,108,13,.05); }
+  .fcard.base { border: 1.5px solid rgba(242,108,13,.55); background: rgba(242,108,13,.1); }
+  .fcard .lbl { font-size: 9px; font-weight: 950; letter-spacing: .14em; text-transform: uppercase; color: var(--otos-paper-muted); margin-bottom: 6px; }
+  .fcard .amt { font-size: 27px; font-weight: 1000; letter-spacing: -0.04em; color: var(--otos-orange); line-height: 1; }
+
+  /* table */
+  .ntable { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(70,48,34,.16); }
+  .ntable th { text-align: left; font-size: 9px; font-weight: 950; letter-spacing: .14em; text-transform: uppercase; color: var(--otos-orange); padding: 9px 13px; background: var(--otos-paper-2); border-bottom: 1px solid rgba(70,48,34,.16); }
+  .ntable td { padding: 8px 13px; font-size: 11.5px; line-height: 1.4; vertical-align: top; border-bottom: 1px solid rgba(70,48,34,.1); color: var(--otos-paper-muted); }
+  .ntable tr:last-child td { border-bottom: none; }
+  .ntable td.metric { font-weight: 800; color: var(--otos-paper-ink); width: 38%; }
+  .ntable td.fig { font-weight: 1000; color: var(--otos-orange); width: 16%; }
+  .ntable td.lab { font-size: 9.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* comparator */
+  .comparator {
+    margin-top: 14px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center;
+    border-radius: 16px; padding: 20px 24px; background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.16); text-align: center;
+  }
+  .comparator .num { font-size: 38px; font-weight: 1000; letter-spacing: -0.05em; line-height: .92; }
+  .comparator .num.a { color: var(--otos-orange); }
+  .comparator .num.b { color: var(--otos-paper-muted); }
+  .comparator .lbl { font-size: 10px; font-weight: 800; color: var(--otos-paper-muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 7px; line-height: 1.4; }
+  .comparator .eq { font-size: 24px; font-weight: 1000; color: var(--otos-paper-muted); }
+
+  /* lists */
+  .value-list, .x-list { list-style: none; margin: 8px 0 0; padding: 0; }
+  .value-list li, .x-list li { position: relative; padding-left: 24px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.48; color: var(--otos-paper-ink); font-weight: 550; }
+  .value-list li::before { content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 11px; background: url("assets/otos-brain-icon.png") center/contain no-repeat; opacity: .8; }
+  .value-list li strong { font-weight: 900; }
+  .x-list li::before { content: "×"; position: absolute; left: 4px; top: -1px; font-size: 17px; font-weight: 900; color: var(--otos-red); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+  .col-card { border-radius: 14px; padding: 15px 17px; border: 1px solid rgba(70,48,34,.14); background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.6)); }
+  .col-card .label { font-size: 9.5px; font-weight: 950; letter-spacing: .22em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 9px; }
+
+  .roi {
+    margin-top: 14px; padding: 14px 18px; border-radius: 14px;
+    background: linear-gradient(100deg, rgba(53,208,127,.1), rgba(53,208,127,.03));
+    border: 1.5px solid rgba(53,208,127,.4); display: flex; align-items: center; gap: 16px;
+  }
+  .roi .big { font-size: 30px; font-weight: 1000; letter-spacing: -0.04em; color: #1f8a5b; flex-shrink: 0; line-height: 1; }
+  .roi .body { font-size: 13px; line-height: 1.5; color: var(--otos-paper-ink); font-weight: 600; }
+  .roi .body span { color: var(--otos-paper-muted); font-weight: 700; }
+
+  .ask-box { border-radius: 14px; padding: 17px 20px; margin: 12px 0 0; background: linear-gradient(180deg, rgba(242,108,13,.1), rgba(242,108,13,.04)); border: 1.5px solid rgba(242,108,13,.42); }
+  .ask-box .label { font-size: 9.5px; font-weight: 950; letter-spacing: .22em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 6px; }
+  .ask-box p { font-size: 14.5px; line-height: 1.58; color: var(--otos-paper-ink); margin: 0; font-weight: 600; }
+
+  .boundaries { font-size: 12px; line-height: 1.55; color: var(--otos-paper-muted); margin: 12px 0 0; font-style: italic; }
+  .dark .boundaries { color: var(--otos-muted); }
+
+  /* ===== Standard boundary box (shared spine) ===== */
+  .boundary-box {
+    margin: 14px 0 0; border-radius: 14px; padding: 13px 17px;
+    background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.18);
+    border-left: 3px solid var(--otos-orange);
+  }
+  .boundary-box .bhead { font-size: 9.5px; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 6px; }
+  .boundary-box p { font-size: 11.5px; line-height: 1.5; color: var(--otos-paper-muted); margin: 0; font-weight: 600; }
+  .boundary-box p strong { color: var(--otos-paper-ink); font-weight: 900; }
+
+  /* model-label badge */
+  .model-badge {
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 8px;
+    font-size: 9.5px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
+    color: #8a6d2f; background: rgba(199,154,74,.13); border: 1px solid rgba(199,154,74,.42);
+    border-radius: 999px; padding: 5px 12px;
+  }
+  .model-badge::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: #c79a4a; }
+
+  .signoff { margin-top: 14px; font-size: 12.5px; line-height: 1.55; color: var(--otos-paper-muted); }
+  .signoff .name { font-size: 13.5px; font-weight: 900; color: var(--otos-paper-ink); display: block; margin-bottom: 2px; }
+  .signoff .promise { display:block; font-size: 15px; font-weight: 900; color: var(--otos-orange); letter-spacing: -0.015em; margin-bottom: 10px; line-height: 1.3; }
+
+  /* label legend */
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; color: var(--otos-paper-muted); }
+  .legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+  .legend .pub { background: var(--otos-orange); }
+  .legend .mod { background: #c79a4a; }
+  .legend .loc { background: #4a7c59; }
+
+  @media print {
+    html, body { background: #fff; }
+    .doc { padding: 0; gap: 0; }
+    .page { box-shadow: none; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
+  /* ===== OTOS shared spine: Team of Services ===== */
+  .tos-spine { margin-top: 16px; border-radius: 13px; padding: 12px 15px; background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.16); border-left: 3px solid var(--otos-orange); }
+  .tos-spine .tos-label { font-size: 8.5px; font-weight: 950; letter-spacing: .18em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
+  .tos-spine .tos-label::before { content: ""; width: 13px; height: 11px; background: url("assets/otos-brain-icon.png") center/contain no-repeat; }
+  .tos-track { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .tos-node { font-size: 9px; font-weight: 800; color: var(--otos-paper-muted); background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.62)); border: 1px solid rgba(70,48,34,.15); border-radius: 999px; padding: 4px 9px; white-space: nowrap; }
+  .tos-node.on { background: rgba(242,108,13,.13); border-color: rgba(242,108,13,.5); color: var(--otos-orange); font-weight: 950; }
+  .tos-track .sep { color: rgba(242,108,13,.5); font-weight: 900; font-size: 10px; }
+
+  /* ===== Pilot dashboard figure ===== */
+  .dash { margin: 14px 0 0; border-radius: 14px; overflow: hidden; border: 1px solid rgba(70,48,34,.18); box-shadow: 0 16px 38px rgba(64,42,22,.14); background: #fff; }
+  .dash img { width: 100%; display: block; }
+  .dash-cap { margin: 11px 0 0; font-size: 11px; line-height: 1.5; color: var(--otos-paper-muted); font-weight: 600; }
+  .dash-cap strong { color: var(--otos-paper-ink); font-weight: 900; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============================================== -->
+  <!-- PAGE 1 — A COST-REDIRECTION OPPORTUNITY -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="01 · Cost redirection">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Private · Discovery briefing</span>
+    </div>
+
+    <div class="refblock">
+      <div class="row full"><span>For the attention of:</span> Scott — Cambridgeshire County Council · Public Health, Drugs &amp; Alcohol · Inclusion Health</div>
+      <div class="row full"><span>Re:</span> The conversation we started — everything you asked me to send.</div>
+      <div class="row"><span>From:</span> Dean Butler — Founder, OTOS Continuity</div>
+      <div class="row"><span>Status:</span> Discovery, not a funding ask · No procurement</div>
+    </div>
+
+    <span class="kicker">The cost case</span>
+    <h1 class="title">A cost-redirection opportunity, hiding in current spend.</h1>
+
+    <p style="font-size:15.5px; color: var(--otos-paper-ink); font-weight:600;">This is not a new cost. It is a smarter use of money the system is already spending — reactively, repeatedly, and across budget lines that never speak to each other.</p>
+
+    <p>Thank you for the meeting, and for being straight with me: no budget right now, but send everything. So here it is — built to make a hard decision easy. OTOS Continuity is a bounded pre-pilot for adults cycling through addiction and crisis, where unresolved ADHD may be the underlying driver of repeat demand. The whole case rests on one idea you'll recognise from your own data: <strong>the cost doesn't disappear — it moves to a different budget line.</strong></p>
+
+    <div class="priorities">
+      <div class="prio"><div class="n">1</div><div class="t"><b>The spend is already happening</b> — reactive, fragmented, repeating across the whole system.</div></div>
+      <div class="prio"><div class="n">2</div><div class="t"><b>The driver is often missed</b> — undiagnosed ADHD beneath the addiction the system treats first.</div></div>
+      <div class="prio"><div class="n">3</div><div class="t"><b>The test is small and bounded</b> — 50 people, 12 weeks, an evidence budget, not a rollout.</div></div>
+    </div>
+
+    <div class="callout soft" style="margin-top:13px;">
+      This is for the <strong>Local Authority level</strong> — county-wide public health. The purpose is discovery: does OTOS fit a priority gap in the Cambridgeshire drugs and alcohol pathway?
+    </div>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Not a pitch · No procurement</span>
+      <span>Page 01 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 2 — THE FULL RIPPLE COST (dark diagram) -->
+  <!-- ============================================== -->
+  <section class="page dark" data-screen-label="02 · The full ripple cost">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The ripple cost · 02 / 08</span>
+    </div>
+
+    <span class="kicker">The full ripple cost</span>
+    <h1 class="title">One person. One year. The cost ripples across the whole system.</h1>
+
+    <div class="ripple-top">
+      <div class="ripple-emblem">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="ripple-head">
+        <div class="big">£90,000–£200,000+</div>
+        <div class="cap">True societal cost, per person, per year — for a high-risk ADHD + addiction case, once all three tiers are counted.</div>
+      </div>
+    </div>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tn">Tier 1 · The individual</div>
+        <h3>Direct costs</h3>
+        <div class="amt">£30k–£120k+</div>
+        <ul>
+          <li>A&amp;E, ambulance, ICU, acute beds</li>
+          <li>Mental-health crisis care &amp; admissions</li>
+          <li>Drug &amp; alcohol treatment / rehab</li>
+          <li>GP, housing, police, probation, prison</li>
+        </ul>
+        <div class="note">Official figures mostly stop here</div>
+      </div>
+      <div class="tier">
+        <div class="tn">Tier 2 · Family &amp; household</div>
+        <h3>Ripple costs</h3>
+        <div class="amt">£5k–£60k+</div>
+        <ul>
+          <li>Partner stress, GP, therapy, sick leave</li>
+          <li>Children: CAMHS, safeguarding, education</li>
+          <li>Carers: burnout, lost work, financial support</li>
+          <li>Relationship breakdown &amp; instability</li>
+        </ul>
+        <div class="note">Usually invisible in national data</div>
+      </div>
+      <div class="tier">
+        <div class="tn">Tier 3 · Community &amp; system</div>
+        <h3>Knock-on costs</h3>
+        <div class="amt">£7k–£40k+</div>
+        <ul>
+          <li>Local-authority cleansing, ASB, safety</li>
+          <li>Employers: HR time, absence, lost output</li>
+          <li>Benefits, DWP assessments, housing</li>
+          <li>Wider justice, victim support, GDP loss</li>
+        </ul>
+        <div class="note">Spread across the whole system</div>
+      </div>
+    </div>
+
+    <div class="vs-band">
+      <div class="col">
+        <div class="lbl">Official benchmark</div>
+        <div class="num bench">£58k–£65k</div>
+        <div class="sub">Estimated annual cost of an identified crack/heroin addict — usually Tier 1 only.</div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="col">
+        <div class="lbl">OTOS full ripple model</div>
+        <div class="num full">£90k–£220k</div>
+        <div class="sub">When direct, family and system-wide ripple costs are included.</div>
+      </div>
+    </div>
+
+    <div class="nation-strip">
+      ~200,000 high-risk ADHD + addiction adults nationally → an avoidable demand of <strong>£4bn+ per year.</strong>
+    </div>
+
+    <p class="boundaries" style="margin-top:11px;">Tier ranges are an OTOS full-ripple cost model built from published unit costs and cross-budget assumptions — a way of seeing the whole burden, not a guaranteed per-case invoice.</p>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · OTOS full-ripple cost model</span>
+      <span>Page 02 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 3 — THE LOCAL MODEL (Cambridgeshire) -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="03 · The local model">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The Cambridgeshire model · 03 / 08</span>
+    </div>
+
+    <span class="kicker">The local model · your patch</span>
+    <h1 class="title">The opportunity is material — and it is local.</h1>
+
+    <p>Here is the same logic, sized for Cambridgeshire &amp; Peterborough — and held to a strict rule: every figure carries its label, and modelling is never quietly passed off as fact. The pre-pilot exists precisely to replace modelling with locally validated evidence.</p>
+
+    <table class="ntable">
+      <thead>
+        <tr><th>Metric</th><th>Figure</th><th>Label</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="metric">Adults in treatment, Cambs + Peterborough</td><td class="fig">4,175</td><td class="lab" style="color:var(--otos-orange)">Published</td><td>Current planning denominator.</td></tr>
+        <tr><td class="metric">Estimated ADHD + addiction risk cohort</td><td class="fig">800–900</td><td class="lab" style="color:#9a7b3a">Modelled</td><td>From published denominators &amp; ADHD prevalence. Subject to local validation.</td></tr>
+        <tr><td class="metric">Pre-pilot cohort</td><td class="fig">50</td><td class="lab" style="color:#4a7c59">Design</td><td>Selected with CGL, CRS, CPFT and partners.</td></tr>
+        <tr><td class="metric">Pre-pilot cost</td><td class="fig">£91.5k</td><td class="lab" style="color:#4a7c59">Budget</td><td>Infrastructure, coordination, evaluation, evidence pack.</td></tr>
+        <tr><td class="metric">Modelled avoidable annual demand</td><td class="fig">≈£18m</td><td class="lab" style="color:#9a7b3a">Modelled</td><td>Not a guaranteed saving. The pre-pilot tests the local evidence.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="legend">
+      <span><i class="pub"></i> Published source</span>
+      <span><i class="mod"></i> OTOS modelling estimate</span>
+      <span><i class="loc"></i> Local / design figure</span>
+    </div>
+
+    <h2 class="sub" style="margin-top:20px;">Forecast annual gross potential — 1,000-person planning cohort.</h2>
+    <span class="model-badge">Planning model · not a forecast or guaranteed saving</span>
+    <p style="margin-bottom:4px;">Against a modelled annual baseline of £90,000 per person — a £90m total annual burden — the forecast gross potential of identifying and supporting ADHD within addiction care:</p>
+    <div class="forecast">
+      <div class="fcard"><div class="lbl">Low case</div><div class="amt">£18.0m</div></div>
+      <div class="fcard base"><div class="lbl">Base case</div><div class="amt">£53.1m</div></div>
+      <div class="fcard"><div class="lbl">High case</div><div class="amt">£67.5m</div></div>
+    </div>
+
+    <div class="callout">
+      <strong>Gross annual potential — not guaranteed cash release.</strong> Figures combine observed counts, modelled overlap and assumption-based forecasting. The point of a small local test is to find out how much is real, here.
+    </div>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Planning model, not a linked patient-level dedupe</span>
+      <span>Page 03 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 4 — THE £91,520 (evidence budget) -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="04 · The pre-pilot cost">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The pre-pilot cost · 04 / 08</span>
+    </div>
+
+    <span class="kicker">The pre-pilot cost · this page only</span>
+    <h1 class="title">£91,520. An evidence budget — not a therapy budget.</h1>
+
+    <p>This is the only place across everything I have prepared where the pre-pilot cost appears in full. It belongs here, in the commissioning conversation. And the most useful way to read it is against a number you already know well.</p>
+
+    <div class="comparator">
+      <div><div class="num a">£91,520</div><div class="lbl">OTOS pre-pilot<br/>50 people · 12 weeks</div></div>
+      <div class="eq">≈</div>
+      <div><div class="num b">£90,000</div><div class="lbl">Residential rehab<br/>1 person · 3 months</div></div>
+    </div>
+
+    <div class="two-col" style="margin-top:18px;">
+      <div class="col-card">
+        <div class="label">What £91,520 covers</div>
+        <ul class="value-list">
+          <li>OTOS Continuity platform infrastructure, 12 weeks</li>
+          <li>Co-production with clinical &amp; community partners</li>
+          <li>Independent evaluation and evidence generation</li>
+          <li>Participant coordination &amp; human-review capacity</li>
+          <li>Data and governance infrastructure</li>
+          <li>Evidence pack for an ICB commissioning decision</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="label">What it is not</div>
+        <ul class="x-list">
+          <li>Not a therapy budget — no clinical treatment is funded here</li>
+          <li>Not a commitment to scale — a bounded 12-week question</li>
+          <li>Not a technology procurement — a locally validated evidence play</li>
+          <li>Not a new service — it wraps around what already exists</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roi">
+      <div class="big">£4.07</div>
+      <div class="body">Return per £1 invested in addiction continuity. <span>Turning Point / LSE comparator — an evidence candidate, not a promise of local return.</span></div>
+    </div>
+
+    <div class="callout">
+      <strong>This is not a request to fund a full rollout.</strong> It is a request to fund a clear question: does a receipted continuity thread, applied to this cohort, measurably reduce silent disengagement?
+    </div>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Evidence budget, not therapy budget</span>
+      <span>Page 04 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 5 — THE EVIDENCE BEHIND THE SAVINGS -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="05 · The evidence">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The evidence behind the savings · 05 / 08</span>
+    </div>
+
+    <span class="kicker">The evidence behind the savings</span>
+    <h1 class="title">Why the underlying driver is worth addressing.</h1>
+
+    <p>None of these are OTOS outcomes. They are published evidence candidates the system already accepts — and together they explain why so much current spend lands too late.</p>
+
+    <div class="num-grid">
+      <div class="ncard"><div class="num">25%</div><div class="desc">of addiction-treatment patients have undiagnosed ADHD</div><span class="tag">Pooled research data</span></div>
+      <div class="ncard"><div class="num">86%</div><div class="desc">of alcohol-dependent adults also present mental-health problems</div><span class="tag">Published</span></div>
+      <div class="ncard"><div class="num">74%</div><div class="desc">starting addiction treatment have mental-health needs</div><span class="tag">Gov UK NDTMS</span></div>
+    </div>
+    <div class="num-grid" style="margin-top:11px;">
+      <div class="ncard"><div class="num">61.3%</div><div class="desc">improvement in addictive-disorder outcomes after ADHD diagnosis &amp; treatment</div><span class="tag">START study · France 2025</span></div>
+      <div class="ncard"><div class="num">12.2%</div><div class="desc">ADHD prevalence found in UK detox units</div><span class="tag">Huntley, 2012</span></div>
+      <div class="ncard"><div class="num">54%</div><div class="desc">of suicides in mental-health patients involved substance use</div><span class="tag">Published</span></div>
+    </div>
+
+    <h2 class="sub" style="margin-top:20px;">The national annual burden.</h2>
+    <div class="num-grid">
+      <div class="ncard"><div class="num">£17bn</div><div class="desc">avoidable annual cost of untreated ADHD</div><span class="tag">NHS England ADHD Taskforce 2025</span></div>
+      <div class="ncard"><div class="num">£27.44bn</div><div class="desc">annual cost of alcohol harm</div><span class="tag">Published</span></div>
+      <div class="ncard"><div class="num">£44.44bn</div><div class="desc">combined total annual burden to the UK</div><span class="tag">Sum of the above</span></div>
+    </div>
+
+    <div class="callout">
+      The system already spends heavily — but often <strong>too late.</strong> OTOS asks to test a lighter, earlier intervention around a cohort that is already costing too much to lose.
+    </div>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Published evidence candidates, not OTOS outcomes</span>
+      <span>Page 05 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 6 — A TEAM OF SERVICES, ALREADY IN MOTION -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="06 · Already in motion">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>A team of services · already in motion · 06 / 08</span>
+    </div>
+
+    <span class="kicker">Already in motion</span>
+    <h1 class="title">This is not an idea on paper. It is a team of services, forming now.</h1>
+
+    <p>You are not being asked to back something speculative and alone. Around this cohort I am building a <strong>team of services</strong> — and the approaches are now going out officially, not just verbally.</p>
+
+    <div class="tos-spine">
+      <div class="tos-label">One team of services · OTOS holds the thread between them</div>
+      <div class="tos-track">
+        <span class="tos-node">CPFT ADHD Team</span>
+        <span class="tos-node">CGL &amp; CRS</span>
+        <span class="tos-node">Alcohol Liaison</span>
+        <span class="tos-node">RCE</span>
+        <span class="tos-node">Mind / WorkWell</span>
+        <span class="tos-node">Dr Claire / LAMP</span>
+        <span class="tos-node on">Public Health</span>
+      </div>
+    </div>
+
+    <ul class="value-list">
+      <li><strong>Ready now:</strong> partner briefs prepared for the CPFT ADHD Team, CGL &amp; CRS, Alcohol Liaison at Addenbrooke's, RCE Wellbeing Hub, and Mind / WorkWell / therapy — each written to its own service.</li>
+      <li><strong>Live this week:</strong> my diagnostic letter is going to the CPFT Adult ADHD Team to progress the NHS pathway; CGL and CRS keyworkers and team leaders are already engaged; Alcohol Liaison met me at the bedside.</li>
+      <li><strong>Already published precedent:</strong> CGL's own work, via Nottingham CVS, on ADHD assessment within substance-use services — this is happening; if I don't open it here, someone will open it eventually.</li>
+      <li><strong>Prepared next:</strong> the commissioner-facing pilot dashboard, the service blueprint and continuity roadmap — the evidence scaffolding a 12-week demonstrator would run on.</li>
+    </ul>
+
+    <div class="callout soft">
+      <strong>Thea is exactly who this is for.</strong> If you can introduce me, I would value it enormously — by all accounts she is the one person straddling and supporting both CPFT and CGL across this gap, and CRS have already mentioned me to her. She is, I suspect, the person who could make a Cambridgeshire demonstrator real on the ground.
+    </div>
+
+    <p style="margin-top:14px;"><strong>On funding — softly.</strong> I am quietly seeking an Angel investor to underwrite the demonstrator so it can stand on independent footing. But I would far rather this was led from inside the system that already carries the cost. If Public Health could free up or part-hold the model from existing spend — <em class="ink" style="font-style:normal;">or if you saw a route to backing it yourself</em> — that would be the cleanest possible start.</p>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Partners invited / in discussion · No endorsement assumed</span>
+      <span>Page 06 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 7 — WHAT THE PILOT SHOWS (dashboard) -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="07 · What the pilot shows">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>What the pilot shows · 07 / 08</span>
+    </div>
+
+    <span class="kicker">What the pilot shows</span>
+    <h1 class="title">A live pilot produces exactly this — commissioner-grade evidence.</h1>
+
+    <p>This is not a promise of a result; it is the measurement instrument. A 12-week Cambridgeshire demonstrator would put a week-by-week, commissioner-facing view in front of you — is the thread holding, where is drift appearing, and is the cohort being caught earlier.</p>
+
+    <figure class="dash">
+      <img src="assets/pilot-dashboard.png" alt="OTOS Continuity pilot dashboard — illustrative, week 7 of 12" />
+    </figure>
+
+    <p class="dash-cap">Illustrative dashboard · continuity held, handoff receipts, drift detected <em style="font-style:normal; color:var(--otos-paper-ink); font-weight:800;">before</em> crisis, ADHD fast-track flags, and per-partner activity — the evidence pack a pre-pilot generates for an ICB commissioning decision. <strong>OTOS surfaces signals; partner teams make the decisions.</strong> Figures shown are illustrative, not results.</p>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Illustrative pilot dashboard, not results</span>
+      <span>Page 07 / 08</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 7 — THE LOCAL ASK / CLOSE -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="08 · The local ask">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>The local ask · 08 / 08</span>
+    </div>
+
+    <span class="kicker">The local ask · Cambridgeshire County Council</span>
+    <h1 class="title">Three questions — starting with a conversation.</h1>
+
+    <p>We are not asking you to commission anything. We are asking three questions — and inviting you to tell us which route makes sense.</p>
+
+    <div class="two-col" style="grid-template-columns:1fr 1fr 1fr; gap:11px;">
+      <div class="col-card"><div class="label">Question 1</div><h2 class="sub" style="font-size:14px;">Does this match what you see?</h2><p style="font-size:11.5px; margin:0;">Is co-occurring ADHD and addiction a visible gap in the Cambridgeshire pathway? Do these people show up in your data?</p></div>
+      <div class="col-card"><div class="label">Question 2</div><h2 class="sub" style="font-size:14px;">What is the right route?</h2><p style="font-size:11.5px; margin:0;">Public Health commissioning, ICB innovation, joint sponsorship, VCSE partnership — what is cleanest for a 12-week demonstrator here?</p></div>
+      <div class="col-card"><div class="label">Question 3</div><h2 class="sub" style="font-size:14px;">Who else is in the room?</h2><p style="font-size:11.5px; margin:0;">What is the minimum set of decision-makers to make a properly scoped pre-pilot real in this county — Thea included?</p></div>
+    </div>
+
+    <h2 class="sub" style="margin-top:18px;">And two practical things only you can offer:</h2>
+    <ul class="value-list">
+      <li>Guidance on where existing drugs-and-alcohol commissioning spend could hold, or part-hold, the model <strong>without requiring new budget</strong>.</li>
+      <li>A route to formal commissioning — the longer-term aim is a permanently funded, joined-up ADHD-addiction pathway in Cambridgeshire.</li>
+    </ul>
+
+    <div class="ask-box">
+      <div class="label">The ask</div>
+      <p>A short follow-up conversation — and, if you're willing, an introduction to Thea. Not a funding commitment. Not a procurement. Just a decision about whether this fits the Cambridgeshire pathway, and who needs to be at the table next.</p>
+    </div>
+
+    <div class="boundary-box" style="margin-top:10px; padding:11px 16px;">
+      <div class="bhead">Boundary, named</div>
+      <p><strong>OTOS does not diagnose, prescribe, treat, replace services or make clinical decisions. OTOS surfaces signals; partner teams make the decisions.</strong> All savings figures are modelled gross potential, not guaranteed cash release; published figures are evidence candidates, not OTOS outcomes. No Council, CPFT or CGL endorsement or agreed pilot is claimed; any work is subject to governance.</p>
+    </div>
+
+    <div class="signoff" style="margin-top:10px;">
+      <span class="promise">Diagnose the ADHD. Treat the driver. The cost chain collapses.</span>
+      <span class="name">With thanks — Dean Butler.</span>
+      Founder, OTOS Life / Out The Other Side · OTOS Digital Ltd · Co. No. 17084455<br/>
+      dean@otos.life · 07585 899 235
+    </div>
+
+    <div class="page-foot">
+      <span>Private discovery briefing · Discovery, not a pitch</span>
+      <span>Page 08 / 08</span>
+    </div>
+  </section>
+
+</div>
+<script>
+  (function () {
+    function go() { setTimeout(function () { window.print(); }, 500); }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (document.readyState === 'complete') go();
+        else window.addEventListener('load', go, { once: true });
+      });
+    } else { window.addEventListener('load', go, { once: true }); }
+  })();
+</script>
+</body>
+</html>

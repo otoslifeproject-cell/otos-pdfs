@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>OTOS — A Note to the People Who Held the Thread</title>
+<meta name="viewport" content="width=794" />
+<link rel="stylesheet" href="assets/colors_and_type.css" />
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body {
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: var(--fw-body);
+    letter-spacing: var(--ls-body);
+    line-height: 1.6;
+    color: var(--otos-paper-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .doc { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 30px 0; }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 22mm 22mm;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    background: var(--otos-paper);
+    color: var(--otos-paper-ink);
+    background-image: radial-gradient(ellipse 56rem 34rem at 100% 0%, rgba(242,108,13,.06), transparent 56%);
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* Brain watermark — very faint, calm */
+  .page::after {
+    content: "";
+    position: absolute;
+    right: -28px; bottom: -28px;
+    width: 240px; height: 188px;
+    background: url("assets/brain.png") right bottom / contain no-repeat;
+    opacity: .035;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page > *:not(.page-foot) { position: relative; z-index: 1; }
+
+  /* ===== Typography ===== */
+  h1.title {
+    font-size: 39px;
+    font-weight: 1000;
+    letter-spacing: -0.034em;
+    line-height: 1.04;
+    margin: 0 0 16px;
+    color: var(--otos-paper-ink);
+    max-width: 19ch;
+  }
+  h2.sub {
+    font-size: 17px; font-weight: 900; letter-spacing: -0.018em;
+    line-height: 1.2; margin: 0 0 9px; color: var(--otos-paper-ink);
+  }
+  p { font-size: 14.5px; line-height: 1.7; margin: 0 0 13px; color: var(--otos-paper-muted); font-weight: 550; }
+  p strong, .ink { color: var(--otos-paper-ink); font-weight: 800; }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 10px; font-weight: 950; letter-spacing: .24em;
+    text-transform: uppercase; color: var(--otos-orange);
+    border: 1px solid rgba(242,108,13,.4);
+    background: rgba(242,108,13,.07);
+    border-radius: 999px; padding: 7px 13px; margin-bottom: 18px;
+  }
+  .kicker::before {
+    content: ""; display: inline-block; width: 13px; height: 11px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat;
+    filter: saturate(.9);
+  }
+
+  /* ===== Header / footer ===== */
+  .page-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px; font-weight: 800; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--otos-paper-muted);
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(70,48,34,.14);
+  }
+  .who { font-weight: 900; letter-spacing: .06em; text-transform: none; font-size: 12.5px; color: var(--otos-paper-ink); }
+  .who.brand { display: inline-flex; align-items: center; gap: 9px; }
+  .who.brand::before {
+    content: ""; width: 21px; height: 16px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat;
+    filter: drop-shadow(0 0 6px rgba(242,108,13,.45));
+  }
+
+  .page-foot {
+    position: absolute; left: 22mm; right: 22mm; bottom: 13mm;
+    display: flex; justify-content: space-between;
+    font-size: 9px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--otos-paper-muted); opacity: .85;
+    z-index: 1;
+  }
+
+  /* ===== Reference block (page 1) ===== */
+  .refblock {
+    border: 1px solid rgba(70,48,34,.16);
+    border-radius: 12px;
+    background: var(--otos-paper-2);
+    padding: 13px 16px;
+    margin-bottom: 22px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 22px;
+  }
+  .refblock .row { font-size: 11px; line-height: 1.4; color: var(--otos-paper-muted); }
+  .refblock .row span { font-weight: 900; color: var(--otos-paper-ink); letter-spacing: .04em; }
+  .refblock .full { grid-column: 1 / -1; }
+
+  /* ===== Priorities ===== */
+  .priorities { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .prio {
+    display: grid; grid-template-columns: 30px 1fr; gap: 13px; align-items: baseline;
+    padding: 12px 16px; border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.6));
+    border: 1px solid rgba(70,48,34,.13);
+  }
+  .prio .n { font-size: 19px; font-weight: 1000; color: var(--otos-orange); letter-spacing: -0.04em; }
+  .prio .t { font-size: 14px; line-height: 1.45; color: var(--otos-paper-ink); font-weight: 600; }
+  .prio .t b { font-weight: 900; }
+
+  /* ===== Clinical letter quote ===== */
+  .letter-quote {
+    border-radius: 16px;
+    padding: 22px 24px 18px;
+    margin: 16px 0;
+    background: var(--otos-paper-2);
+    border: 1px solid rgba(70,48,34,.16);
+    border-left: 3px solid var(--otos-orange);
+    box-shadow: 0 16px 38px rgba(64,42,22,.08);
+  }
+  .letter-quote .tag {
+    font-size: 9.5px; font-weight: 950; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--otos-orange); margin-bottom: 11px;
+  }
+  .letter-quote blockquote {
+    margin: 0; font-size: 21px; font-weight: 800; line-height: 1.32;
+    letter-spacing: -0.02em; color: var(--otos-paper-ink);
+  }
+  .letter-quote .src { margin: 13px 0 0; font-size: 10.5px; color: var(--otos-paper-muted); font-weight: 700; }
+
+  .cohort { margin: 14px 0; }
+  .cohort .neg { font-size: 14px; color: var(--otos-paper-muted); margin: 0 0 4px; line-height: 1.5; }
+  .cohort .pos { font-size: 18px; color: var(--otos-orange); font-weight: 1000; letter-spacing: -0.02em; margin: 9px 0 0; }
+
+  /* ===== Callout ===== */
+  .callout {
+    border-radius: 14px; padding: 16px 20px; margin: 16px 0 0;
+    background: var(--otos-paper-ink); color: var(--otos-paper-2);
+    font-size: 14px; line-height: 1.55; font-weight: 600;
+  }
+  .callout strong { color: var(--otos-orange-2); }
+  .callout.soft {
+    background: rgba(242,108,13,.07);
+    border: 1px solid rgba(242,108,13,.3);
+    color: var(--otos-paper-ink);
+  }
+  .callout.soft strong { color: var(--otos-orange); }
+
+  /* ===== Pull quote (founder voice) ===== */
+  .pull {
+    border-left: 3px solid var(--otos-orange);
+    padding: 4px 0 4px 18px;
+    margin: 16px 0;
+    font-size: 19px; font-weight: 900; letter-spacing: -0.02em;
+    line-height: 1.3; color: var(--otos-paper-ink);
+  }
+  .pull .by { display:block; margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--otos-paper-muted); }
+
+  /* ===== Feature → benefit table ===== */
+  .fb {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 12px 0 0; border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(70,48,34,.16);
+  }
+  .fb th {
+    text-align: left; font-size: 10px; font-weight: 950; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--otos-orange);
+    padding: 10px 13px; background: var(--otos-paper-2);
+    border-bottom: 1px solid rgba(70,48,34,.16);
+  }
+  .fb td {
+    padding: 10px 13px; font-size: 12.5px; line-height: 1.45; vertical-align: top;
+    border-bottom: 1px solid rgba(70,48,34,.1);
+    color: var(--otos-paper-muted);
+  }
+  .fb tr:last-child td { border-bottom: none; }
+  .fb td.el { font-weight: 900; color: var(--otos-paper-ink); width: 26%; }
+  .fb td.wh { width: 34%; }
+
+  .value-list { list-style: none; margin: 10px 0 0; padding: 0; }
+  .value-list li {
+    position: relative; padding-left: 24px; margin-bottom: 9px;
+    font-size: 14px; line-height: 1.5; color: var(--otos-paper-ink); font-weight: 550;
+  }
+  .value-list li::before {
+    content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 11px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat; opacity: .8;
+  }
+
+  .ask-box {
+    border-radius: 14px; padding: 17px 20px; margin: 10px 0 0;
+    background: linear-gradient(180deg, rgba(242,108,13,.1), rgba(242,108,13,.04));
+    border: 1.5px solid rgba(242,108,13,.42);
+  }
+  .ask-box .label { font-size: 9.5px; font-weight: 950; letter-spacing: .22em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 6px; }
+  .ask-box p { font-size: 14.5px; line-height: 1.58; color: var(--otos-paper-ink); margin: 0; font-weight: 600; }
+
+  .boundaries { font-size: 12px; line-height: 1.55; color: var(--otos-paper-muted); margin: 12px 0 0; font-style: italic; }
+
+  .signoff { margin-top: 14px; font-size: 12.5px; line-height: 1.55; color: var(--otos-paper-muted); }
+  .signoff .name { font-size: 13.5px; font-weight: 900; color: var(--otos-paper-ink); display: block; margin-bottom: 3px; }
+  .signoff .promise { display:block; font-size: 14.5px; font-weight: 900; color: var(--otos-orange); letter-spacing: -0.015em; margin-bottom: 9px; line-height: 1.25; }
+
+  /* ===== Momentum list (page 4) ===== */
+  .mlist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .mlist li {
+    position: relative; padding-left: 24px; margin-bottom: 11px;
+    font-size: 14px; line-height: 1.52; color: var(--otos-paper-ink); font-weight: 550;
+  }
+  .mlist li::before {
+    content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 11px;
+    background: url("assets/otos-brain-icon.png") center/contain no-repeat; opacity: .8;
+  }
+  .mlist li strong { font-weight: 900; }
+
+  .midhead {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 10.5px; font-weight: 950; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--otos-orange); margin: 22px 0 12px;
+  }
+  .midhead::after { content: ""; flex: 1; height: 1px; background: rgba(242,108,13,.28); }
+
+  /* The prize row */
+  .prize-row { display: grid; grid-template-columns: .58fr 1fr; gap: 18px; align-items: stretch; margin-top: 8px; }
+  .prize-stat {
+    background: var(--otos-paper-ink); border-radius: 14px; padding: 15px 16px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .prize-stat .num { font-size: 44px; font-weight: 1000; letter-spacing: -0.045em; line-height: .9; color: var(--otos-orange-2); }
+  .prize-stat .lbl { font-size: 12px; line-height: 1.45; color: rgba(255,255,255,.85); font-weight: 600; margin-top: 11px; }
+  .prize-stat .src { display: block; margin-top: 8px; font-size: 8.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--otos-orange-2); }
+  .prize-text { display: flex; flex-direction: column; justify-content: center; }
+  .prize-text p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--otos-paper-ink); }
+  .prize-text strong { color: var(--otos-orange); font-weight: 900; }
+  .srcline { font-size: 11.5px; line-height: 1.5; color: var(--otos-paper-muted); margin: 12px 0 0; }
+  .srcline em { color: var(--otos-paper-ink); font-style: italic; }
+
+  /* ===== Standard boundary box (shared spine) ===== */
+  .boundary-box {
+    margin: 14px 0 0; border-radius: 14px; padding: 13px 17px;
+    background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.18);
+    border-left: 3px solid var(--otos-orange);
+  }
+  .boundary-box .bhead { font-size: 9.5px; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 6px; }
+  .boundary-box p { font-size: 11.5px; line-height: 1.5; color: var(--otos-paper-muted); margin: 0; font-weight: 600; }
+  .boundary-box p strong { color: var(--otos-paper-ink); font-weight: 900; }
+
+  /* no-blame softener line under a heading */
+  .softener {
+    font-size: 12.5px; font-weight: 800; letter-spacing: .02em;
+    color: var(--otos-orange); margin: -8px 0 14px;
+  }
+
+  @media print {
+    html, body { background: #fff; }
+    .doc { padding: 0; gap: 0; }
+    .page { box-shadow: none; margin: 0; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
+  /* ===== OTOS shared spine: Team of Services ===== */
+  .tos-spine { margin-top: 16px; border-radius: 13px; padding: 12px 15px; background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.16); border-left: 3px solid var(--otos-orange); }
+  .tos-spine .tos-label { font-size: 8.5px; font-weight: 950; letter-spacing: .18em; text-transform: uppercase; color: var(--otos-orange); margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
+  .tos-spine .tos-label::before { content: ""; width: 13px; height: 11px; background: url("assets/otos-brain-icon.png") center/contain no-repeat; }
+  .tos-track { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .tos-node { font-size: 9px; font-weight: 800; color: var(--otos-paper-muted); background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.62)); border: 1px solid rgba(70,48,34,.15); border-radius: 999px; padding: 4px 9px; white-space: nowrap; }
+  .tos-node.on { background: rgba(242,108,13,.13); border-color: rgba(242,108,13,.5); color: var(--otos-orange); font-weight: 950; }
+  .tos-track .sep { color: rgba(242,108,13,.5); font-weight: 900; font-size: 10px; }
+
+  /* ===== Shared image banner ===== */
+  .img-banner { margin: 16px 0 0; border-radius: 14px; overflow: hidden; position: relative; height: 152px; border: 1px solid rgba(70,48,34,.16); box-shadow: 0 14px 32px rgba(64,42,22,.12); }
+  .img-banner img { width: 100%; height: 100%; object-fit: cover; }
+  .img-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,12,6,.66) 0%, rgba(20,12,6,.20) 44%, rgba(20,12,6,0) 70%); }
+  .img-banner .cap { position: absolute; left: 16px; bottom: 12px; right: 46%; z-index: 1; }
+  .img-banner .cap .k { font-size: 9px; font-weight: 950; letter-spacing: .2em; text-transform: uppercase; color: var(--otos-orange-2); display: block; margin-bottom: 4px; }
+  .img-banner .cap .t { font-size: 15px; font-weight: 1000; letter-spacing: -0.02em; line-height: 1.14; color: #fff; }
+  .img-banner .ill { position: absolute; right: 11px; bottom: 9px; z-index: 1; font-size: 7.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============================================== -->
+  <!-- PAGE 1 — TO THE PEOPLE WHO HELD THE THREAD -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="01 · Peer to peer">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Private · Peer to peer</span>
+    </div>
+
+    <div class="refblock">
+      <div class="row full"><span>For the attention of:</span> CGL &amp; CRS Team Leaders and keyworkers — Cambridge &amp; Peterborough</div>
+      <div class="row full"><span>Re:</span> The thing I told you I was building. It's ready for your eyes.</div>
+      <div class="row"><span>From:</span> Dean Butler — former service user, now founder</div>
+      <div class="row"><span>Status:</span> Not a complaint. Not a sales pitch.</div>
+    </div>
+
+    <span class="kicker">From someone you held</span>
+    <h1 class="title">You held the thread for me once. Let's do it on purpose this time.</h1>
+
+    <p>Some of you reading this know me. You know I have been putting something together, and you have been waiting to see exactly what. This is it — and I wanted you to see it before almost anyone else, because you are the reason it exists.</p>
+
+    <p>When I finally engineered my own way to the right treatment, <strong>two people in the service held the thread for me</strong> — wrote the letter the psychiatrist needed, vouched for the engagement work I had been doing. For the first time in years, the thread held. I have not forgotten that, and I am not going to.</p>
+
+    <p>I once said to a nurse on a ward: <em class="ink" style="font-style:normal;">&ldquo;Next time we meet, I won't be your patient. I'll be your partner.&rdquo;</em> This brief is me keeping that promise — to the addiction side too. So let me be clear about what it is, and what it is not.</p>
+
+    <p>It is <strong>not</strong> a complaint about CGL or CRS — it is the opposite. It is <strong>not</strong> asking keyworkers to become ADHD clinicians. It is <strong>not</strong> a product I am selling you. It is an invitation to meet in the middle: the addiction side and the ADHD side, with one continuity thread between them.</p>
+
+    <div class="priorities">
+      <div class="prio"><div class="n">1</div><div class="t"><b>The cohort you already see</b> — adults whose addiction may be ADHD-driven.</div></div>
+      <div class="prio"><div class="n">2</div><div class="t"><b>The thread that keeps breaking</b> — between your service and ADHD care.</div></div>
+      <div class="prio"><div class="n">3</div><div class="t"><b>A continuity layer that holds it</b> — without changing how you work.</div></div>
+    </div>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 01 / 06</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 2 — THE CLINICAL ANCHOR (shared) -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="02 · The clinical anchor">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The clinical letter · 02 / 06</span>
+    </div>
+
+    <span class="kicker">The clinical anchor</span>
+    <h1 class="title">The diagnosis is the thesis, in clinical language.</h1>
+
+    <p>In April 2026 I received a diagnostic letter from <strong>Dr Fagbemi, consultant psychiatrist at Psymplicity</strong>, addressed to the CPFT Adult ADHD Team. It is medical correspondence about me — not an endorsement of anything I am building. But it names, in one sentence, the exact pattern you watch walk through your doors every week:</p>
+
+    <div class="letter-quote">
+      <div class="tag">From the diagnostic letter · Psymplicity · April 2026</div>
+      <blockquote>&ldquo;Adult ADHD, previously complicated with excess alcohol use to self-medicate inadequately managed ADHD symptoms.&rdquo;</blockquote>
+      <p class="src">Dr Fagbemi, Consultant Psychiatrist · addressed to the CPFT Adult ADHD Team.</p>
+    </div>
+
+    <div class="cohort">
+      <p class="ink" style="font-size:13.5px; font-weight:800; margin:0 0 6px;">Read the order of that sentence carefully.</p>
+      <p class="neg">Not &ldquo;ADHD plus alcohol use disorder, treated separately.&rdquo;</p>
+      <p class="neg">Not &ldquo;alcohol use disorder, with ADHD as comorbidity.&rdquo;</p>
+      <p class="pos">Adult ADHD, complicated by self-medication.</p>
+    </div>
+
+    <p>The order of operations is everything, and you have felt it in the rooms. Sitting in recovery meetings, I started to think something I could not say out loud: <strong>at least half the people here are undiagnosed ADHD.</strong> I still believe that. I suspect you have thought it too.</p>
+
+    <div class="callout soft">
+      This letter is about <strong>my care</strong> — it is not proof that OTOS works. It is proof that the mechanism you see every week now has a name on letterhead. The driver underneath the addiction is real, documented, and treatable.
+    </div>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 02 / 06</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 3 — THE THING ONLY ADDICTION SERVICES SEE -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="03 · What you can see">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>What you see first · 03 / 06</span>
+    </div>
+
+    <span class="kicker">What you can see that others can't</span>
+    <h1 class="title">The relapse the treatment system created itself.</h1>
+    <p class="softener">Not your fault, and not your workload — this is about how the system was designed, never about the care you gave.</p>
+
+    <p>You see this cohort before anyone else does. You see them cycle — relapse, silence, return — and you carry the frustration of watching it happen with nowhere upstream to send them. I lived the sharpest version of that, inside dual-diagnosis treatment.</p>
+
+    <div class="img-banner">
+      <img src="assets/cgl-keyworker-office.png" alt="Where the pattern is seen first." style="object-position: center 32%;" />
+      <div class="cap"><span class="k">Recovery-side</span><span class="t">Where the pattern is seen first.</span></div>
+      <span class="ill">Illustrative · OTOS mock-up</span>
+    </div>
+
+    <p>On arrival at a residential rehab — funded by CGL and a charity, staffed by remarkable people doing real care — <strong>my ADHD medication was removed because it was a stimulant.</strong> The underlying condition was switched off by the treatment system itself. I came out fully twelve-stepped and addiction-informed, with nothing underneath holding the brain that started all of it. The relapse that followed was not a treatment failure. It was a system-generated relapse.</p>
+
+    <div class="pull">
+      &ldquo;The programme called it a character defect. I knew it wasn't.&rdquo;
+      <span class="by">— and the clinical letter, years later, proved it wasn't.</span>
+    </div>
+
+    <p>When ADHD is left waiting and services run on rigid criteria, people do desperate things to qualify for help. That is a design problem, not a moral failing — and it is the gap OTOS is built to close. The most honest line in my whole story was said by an alcohol liaison nurse: <em class="ink" style="font-style:normal;">&ldquo;You're right. There's nowhere for me to send you. I'd appreciate more places to signpost.&rdquo;</em></p>
+
+    <div class="callout">
+      You are <strong>not</strong> the problem in this story — you are the people most likely to see the missed driver first. What is missing is not your effort or your care. It is a thread that survives the handoff between your service and ADHD care.
+    </div>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 03 / 06</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 4 — ALREADY IN MOTION + THE PRIZE -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="04 · Already in motion">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Already in motion · the prize · 04 / 06</span>
+    </div>
+
+    <span class="kicker">Already in motion</span>
+    <h1 class="title">Your own organisation has already started this.</h1>
+
+    <p>This is not me asking you to leap into the unknown. The recognition already exists inside your own world — and a good deal of the goodwill is already in this region, with the people reading this note.</p>
+
+    <ul class="mlist">
+      <li><strong>CGL has already published practice-development work</strong>, through Nottingham CVS's Practice Development Unit, on psychotherapeutic and diagnostic assessment approaches for ADHD within substance-use services — mapping the real barriers you know by heart: symptom overlap, substance-induced symptoms, stigma, missed appointments, chaotic lifestyle.</li>
+      <li><strong>The cohort is already visible to CGL and CRS</strong> — adults cycling through relapse and return, where unrecognised or under-treated ADHD may be the missed driver.</li>
+      <li><strong>The Team Leaders who held me are one email away.</strong> Several of you have already said, in your own words, that you want to help open this conversation.</li>
+    </ul>
+
+    <p class="srcline">Source · CGL / Nottingham CVS Practice Development Unit — <em>&ldquo;Psychotherapeutic assessment approaches in the diagnostic assessment of ADHD.&rdquo;</em> ADHD is already being recognised inside addiction settings. OTOS does not duplicate that clinical work — it makes continuity visible between the two pathways, so the cohort, once identified, is fast-tracked and held rather than lost.</p>
+
+    <div class="midhead">The prize · imagine if</div>
+    <div class="prize-row">
+      <div class="prize-stat">
+        <div class="num">61.3%</div>
+        <div class="lbl">improvement in addictive-disorder outcomes at six months, after ADHD diagnosis and appropriate treatment.<span class="src">START study · France, 2025</span></div>
+      </div>
+      <div class="prize-text">
+        <p>Imagine even part of that holding for a small Cambridge &amp; Peterborough cohort. Your success rates rise, relapse falls, A&amp;E crisis presentations fall — and a meaningful share of the costs the NHS Independent ADHD Taskforce (2025) called <strong>avoidable</strong> begin, quietly, to become avoidable here.</p>
+      </div>
+    </div>
+
+    <div class="tos-spine">
+      <div class="tos-label">One team of services · OTOS holds the thread between them</div>
+      <div class="tos-track">
+        <span class="tos-node">CPFT ADHD Team</span>
+        <span class="tos-node on">CGL &amp; CRS</span>
+        <span class="tos-node">Alcohol Liaison</span>
+        <span class="tos-node">RCE</span>
+        <span class="tos-node">Mind / WorkWell</span>
+        <span class="tos-node">Dr Claire / LAMP</span>
+        <span class="tos-node">Public Health</span>
+      </div>
+    </div>
+
+    <p class="boundaries">Published evidence candidates, not OTOS outcomes — the point of a small, bounded local test is to find out how much holds here.</p>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 04 / 06</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 5 — MEETING IN THE MIDDLE / THE ASK -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="05 · Meeting in the middle">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>Meeting in the middle · 05 / 06</span>
+    </div>
+
+    <span class="kicker">Meeting in the middle</span>
+    <h1 class="title" style="font-size:33px; margin-bottom:12px; max-width:23ch;">What I'm actually asking of you.</h1>
+
+    <p><strong>OTOS Continuity</strong> is a non-clinical layer that holds the thread between services. It does not diagnose, prescribe, treat or replace anyone. <strong>It surfaces signals; your team makes every decision.</strong> Nothing changes in how you work — what changes is what becomes visible.</p>
+
+    <table class="fb">
+      <thead>
+        <tr><th>OTOS element</th><th>What it does</th><th>Why it matters to you</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="el">Micro check-ins</td><td class="wh">Simple signals between appointments</td><td>Shows whether someone is still connected, or starting to drift</td></tr>
+        <tr><td class="el">Transition receipts</td><td class="wh">Records whether a handoff happened</td><td>Stops referrals to ADHD care disappearing into silence</td></tr>
+        <tr><td class="el">Drift visibility</td><td class="wh">Flags missing follow-through</td><td>Makes relapse risk visible earlier, for a keyworker to act</td></tr>
+        <tr><td class="el">Human review queue</td><td class="wh">Keeps decisions with people</td><td>No automated clinical decisions — your judgement stays central</td></tr>
+        <tr><td class="el">Tokenised continuity trail</td><td class="wh">Holds minimal continuity signals</td><td>Pathway visibility without becoming a new clinical record</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sub" style="margin-top:16px;">Why CGL &amp; CRS being in the room matters.</h2>
+    <ul class="value-list">
+      <li>You see this cohort first — often long before ADHD services do.</li>
+      <li>You know who is drifting, who is engaging, and who is one missed appointment from crisis.</li>
+      <li>Through a put-forward model, you can refer — and OTOS never needs to see the data first.</li>
+    </ul>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 05 / 06</span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 6 — THE ASK / KEEPING A PROMISE -->
+  <!-- ============================================== -->
+  <section class="page" data-screen-label="06 · The ask">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>The ask · keeping a promise · 06 / 06</span>
+    </div>
+
+    <span class="kicker">Keeping a promise</span>
+    <h1 class="title" style="max-width: 22ch;">So let's do it on purpose, for the next person.</h1>
+
+    <p style="font-size:15.5px;">Everything in these pages comes down to one small, concrete next step. No commitment beyond a conversation — just the two sides of this finally talking to each other, with me in the middle, and the cohort we both already recognise held between us instead of lost.</p>
+
+    <p style="font-size:15.5px;">You did not have a place to send me when I needed it. I am trying to build that place — and I would rather build it <em class="ink" style="font-style:normal;">with</em> the people who held me than for them.</p>
+
+    <div class="ask-box">
+      <div class="label">The ask</div>
+      <p>A 30-minute conversation — no commitment beyond that. Help me shape who would safely be in and out of a small, jointly-agreed group, and whether a CGL / CRS put-forward model could let us test this together. You held the thread for me once. I'm asking whether we do it on purpose, for the next person.</p>
+    </div>
+
+    <p class="boundaries">OTOS remains non-clinical; clinical responsibility stays with clinical teams. Nothing here claims NHS, CGL, CRS or CPFT endorsement, an approved pilot, or proven outcomes. Any future work would be subject to governance and qualified clinical leadership.</p>
+
+    <div class="boundary-box">
+      <div class="bhead">Boundary, named</div>
+      <p><strong>OTOS does not diagnose, prescribe, treat, replace services or make clinical decisions. OTOS surfaces signals; partner teams make the decisions.</strong> You are not being asked to carry the whole solution. No endorsement is assumed or implied; published figures are evidence candidates, not OTOS outcomes. Any work would be subject to governance and qualified clinical leadership.</p>
+    </div>
+
+    <div class="signoff">
+      <span class="promise">&ldquo;Next time we meet, I won't be your patient. I'll be your partner.&rdquo;</span>
+      <span class="name">With real thanks — Dean Butler.</span>
+      Founder, OTOS Life / Out The Other Side · OTOS Digital Ltd · Co. No. 17084455<br/>
+      dean@otos.life · 07585 899 235
+    </div>
+
+    <div class="page-foot">
+      <span>Private peer-to-peer note · Not a complaint · Not a proposal</span>
+      <span>Page 06 / 06</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -80,24 +80,6 @@
     margin: 0 0 50px;
   }
 
-  /* ===== Team pathway figure ===== */
-  .pathway {
-    margin: 0 0 50px;
-    border-radius: 24px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #fffaf0, #f4efe6);
-    border: 1px solid rgba(255,255,255,.14);
-    box-shadow: 0 28px 70px rgba(0,0,0,.34);
-    padding: 26px 26px 18px;
-    text-align: center;
-  }
-  .pathway img { width: 100%; max-width: 760px; height: auto; display: block; margin: 0 auto; }
-  .pathway figcaption {
-    margin-top: 12px;
-    font-size: 12px; font-weight: 800; letter-spacing: .04em;
-    color: var(--otos-paper-muted);
-  }
-
   /* ===== Cards ===== */
   .cards {
     display: grid;
@@ -264,6 +246,21 @@
     .howto ol { grid-template-columns: 1fr; }
     .support { flex-direction: column; align-items: flex-start; }
   }
+
+  /* ===== Print ===== */
+  @page { size: A4 portrait; margin: 14mm; }
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { background: var(--otos-bg) !important; }
+    .wrap { padding: 0; max-width: none; }
+    h1 { font-size: 56px; }
+    .lede { font-size: 16px; margin-bottom: 28px; }
+    .cards { gap: 16px; margin-bottom: 22px; }
+    .card, .support, .howto { break-inside: avoid; page-break-inside: avoid; }
+    .card:hover, .support:hover { transform: none; border-color: rgba(255,255,255,.14); box-shadow: none; }
+    .howto { margin-top: 22px; }
+    .foot { margin-top: 22px; padding-top: 14px; }
+  }
 </style>
 </head>
 <body>
@@ -274,27 +271,22 @@
     <span class="meta">Private follow-up materials · v1</span>
   </header>
 
-  <span class="kicker">Private brief package</span>
-  <h1>Nine briefs. One team of services.</h1>
+  <span class="kicker">Follow-up briefs · Private package</span>
+  <h1>Two routes. Two briefs. One mission.</h1>
   <p class="lede">
-    Nine founder-led briefs — for funders, a champion, and the clinical, addiction, hospital, wellbeing, therapy, public-health and lifestyle-medicine partners who make up the team of services. Each speaks to its own recipient; all share one continuity thread, respect clinical boundaries, and never overclaim. All designed in the OTOS Continuity visual system.
+    Short, founder-led PDF briefs to send <em style="color: var(--otos-ink); font-style: normal; font-weight: 700;">only after</em> a recipient replies positively to initial outreach. Both respect clinical boundaries. Neither overclaims. Both designed in the OTOS Continuity visual system.
   </p>
-
-  <figure class="pathway">
-    <img src="assets/partner-pathway.png" alt="The OTOS Continuity team of services — partner organisations forming the OTOS brain" />
-    <figcaption>One team of services — OTOS Continuity holds the thread between them.</figcaption>
-  </figure>
 
   <div class="cards">
 
     <a class="card" href="Angel Funder Brief.html">
       <div class="label">PDF 01 · Sent by Gareth</div>
       <h2>Angel / Strategic Funder Follow-Up Brief.</h2>
-      <p class="desc">A 10-page strategic memo for UK angels, strategic investors, funders and Cambridge-connected supporters. The upstream intervention, founder truth, the clinical-letter anchor, the evidence and the prize (ADHD Taskforce &amp; START study), six route options, flagship demonstrator, the honest data-sharing gate, four lawful fallbacks, the addiction-side precedent, ask and next conversation.</p>
+      <p class="desc">A 6-page strategic memo for UK angels, strategic investors, funders and Cambridge-connected supporters. Mission, mechanism, six route options, flagship demonstrator, the honest data-sharing gate, four lawful fallbacks, ask, why-now, next conversation.</p>
       <div class="meta-row">
         <span class="pill">A4 portrait</span>
-        <span class="pill">10 pages</span>
-        <span class="pill">7–9 min read</span>
+        <span class="pill">6 pages</span>
+        <span class="pill">4–6 min read</span>
         <span class="pill accent">Print-ready PDF</span>
       </div>
       <span class="cta">Open the brief</span>
@@ -306,118 +298,14 @@
       <p class="desc">A 5-page private invitation for public personalities, recovery advocates, ADHD/neurodivergence advocates, mental-health leads, foundation contacts and people with lived experience. Founder voice, careful menu of five support levels, consent-first throughout.</p>
       <div class="meta-row">
         <span class="pill">A4 portrait</span>
-        <span class="pill">6 pages</span>
-        <span class="pill">4–6 min read</span>
+        <span class="pill">5 pages</span>
+        <span class="pill">3–5 min read</span>
         <span class="pill accent">Print-ready PDF</span>
       </div>
       <span class="cta">Open the brief</span>
     </a>
 
   </div>
-
-  <a class="support" href="Clinical Letter Context Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>Clinical Letter Context Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">Separate clinical route</span></h3>
-      <p>A 7-page, NHS-safe cover brief that accompanies Dean's diagnostic letter to the CPFT Adult ADHD Team. Personal clinical care first; pathway learning second; a possible OTOS conversation third. <strong style="color: var(--otos-ink); font-weight:800;">Not outreach — do not send like the briefs above.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="CGL and CRS Team Leaders Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>CGL &amp; CRS Team Leaders Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">Addiction-side partner</span></h3>
-      <p>A 6-page, peer-to-peer note to the keyworkers and Team Leaders who already held the thread for Dean. The shared clinical anchor, the system-generated relapse only addiction services see, CGL's own published ADHD work, the START 61.3% prize, and the invitation to meet the ADHD Team in the middle. <strong style="color: var(--otos-ink); font-weight:800;">Designed to pair with the Clinical brief above.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="Alcohol Liaison Bedside Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>Alcohol Liaison / Bedside Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">True-upstream hospital route</span></h3>
-      <p>A 6-page, private note to the CPFT Alcohol Liaison team working inside Addenbrooke's — the people who met Dean at the bedside with nowhere left to send him. Why the bedside is the earliest interception point, what one easy urgency flag could add, the now-and-later pathway, and the ask. <strong style="color: var(--otos-ink); font-weight:800;">Warm and personal — addressed to Helen first.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="OTOS Alcohol Liaison Bedside - Emails.md">
-    <div>
-      <h3>Alcohol Liaison brief — accompanying emails.</h3>
-      <p>A warm initial note to Helen, and the PDF-send follow-up. Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
-
-  <a class="support" href="OTOS Clinical Letter Context — Emails.md">
-    <div>
-      <h3>Clinical brief — accompanying emails.</h3>
-      <p>Forwarding email to Paul / admin (with consent to forward) and an optional service-lead follow-up. Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
-
-  <a class="support" href="RCE Wellbeing Hub Partner Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>RCE Wellbeing Hub Partner Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">Active waiting layer</span></h3>
-      <p>A 6-page, private partner brief to the RCE Wellbeing Hub — the courses that landed for Dean once his ADHD was treated. Why waiting needs structure, the newly-diagnosed/newly-medicated window, the course-as-touchpoint model, what we'd need from RCE, and the ask. <strong style="color: var(--otos-ink); font-weight:800;">Turning passive waiting into active continuity.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="OTOS RCE Wellbeing Hub - Emails.md">
-    <div>
-      <h3>RCE brief — accompanying emails.</h3>
-      <p>A warm initial note to RCE, and the PDF-send follow-up. Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
-
-  <a class="support" href="Mind WorkWell Therapy Partner Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>Mind / WorkWell / Therapy Partner Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">VCSE &amp; therapy thread</span></h3>
-      <p>A 6-page, private partner brief to Mind / WorkWell East and Jo Fenton (with consent) — the therapy that landed once Dean's ADHD was treated. The live shared-care limbo, the protected therapy room, the charity-record gap, and the team-of-services ask. <strong style="color: var(--otos-ink); font-weight:800;">Therapy stays sacrosanct; the thread sits beside it.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="OTOS Mind WorkWell Therapy - Emails.md">
-    <div>
-      <h3>Mind / WorkWell / Therapy brief — accompanying emails.</h3>
-      <p>Initial note to the liaison, the PDF-send follow-up, and a careful private note to Jo (consent-led). Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
-
-  <a class="support" href="Public Health Cost Case Brief.html" style="border-color: rgba(242,108,13,.42); background: rgba(242,108,13,.05);">
-    <div>
-      <h3>Public Health Cost Case Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">The money case</span></h3>
-      <p>A 7-page discovery briefing for Cambridgeshire County Council Public Health (Drugs &amp; Alcohol) — the cost-redirection case. The native Ripple Cost diagram, the disciplined local model (4,175 → 800–900 → 50), the £91,520 ≈ £90,000 comparator, the published savings evidence, the team of services forming now, and the local ask. <strong style="color: var(--otos-ink); font-weight:800;">Built to make a hard decision easy.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="OTOS Public Health Cost Case - Emails.md">
-    <div>
-      <h3>Public Health brief — accompanying emails.</h3>
-      <p>Follow-up to Scott, and the warm intro note to Thea. Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
-
-  <a class="support" href="Dr Claire Gillvray LAMP Strategic Ally Brief.html" style="border-color: rgba(242,108,13,.32);">
-    <div>
-      <h3>Dr Claire Gillvray / LAMP Strategic Ally Brief. <span style="font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color: var(--otos-orange-2); border:1px solid rgba(242,108,13,.4); border-radius:999px; padding:3px 9px; margin-left:6px; vertical-align:2px;">Pressure-test ally</span></h3>
-      <p>A 6-page private ally brief to Dr Claire Gillvray (LAMP / lifestyle medicine / waiting-well) — following up the RCE conversation. The waiting-well seam, the lived sequence, what OTOS adds around LAMP/RCE without duplicating it, and one narrow use case to pressure-test. <strong style="color: var(--otos-ink); font-weight:800;">An honest critique invitation, not an endorsement ask.</strong></p>
-    </div>
-    <span class="cta">Open the brief</span>
-  </a>
-
-  <a class="support" href="OTOS Dr Claire Gillvray LAMP - Emails.md">
-    <div>
-      <h3>Dr Claire / LAMP brief — accompanying emails.</h3>
-      <p>Initial RCE follow-up, the PDF-send note, and a meeting-setup reply. Markdown.</p>
-    </div>
-    <span class="cta">Open the doc</span>
-  </a>
 
   <a class="support" href="OTOS Follow-Up Briefs.md">
     <div>
@@ -446,5 +334,17 @@
   </footer>
 
 </div>
+<script>
+  (async () => {
+    try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+    const imgs = Array.from(document.images);
+    await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => {
+      img.addEventListener('load', res, { once: true });
+      img.addEventListener('error', res, { once: true });
+    })));
+    await new Promise(r => setTimeout(r, 500));
+    window.print();
+  })();
+</script>
 </body>
 </html>
