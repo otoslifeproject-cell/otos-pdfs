@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>OTOS × AstraZeneca — NIA Master Brief · Exploratory Internal Review</title>
+<meta name="viewport" content="width=794" />
+<link rel="stylesheet" href="assets/colors_and_type.css" />
+<link rel="stylesheet" href="assets/otos-brief.css" />
+<link rel="stylesheet" href="assets/az-nia-v2.css" />
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#17130f"/>
+    <text x="50" y="44" font-family="Inter, sans-serif" font-size="30" font-weight="900" fill="#f26c0d" text-anchor="middle">NIA</text>
+    <text x="50" y="64" font-family="Inter, sans-serif" font-size="9" font-weight="800" fill="#fbf7ee" text-anchor="middle" letter-spacing="1">OTOS × AZ</text>
+  </svg>
+</template>
+</head>
+<body>
+<div class="doc">
+
+<style>
+  .roadmap-fig { margin: 14px 0 0; border-radius: 14px; background: var(--otos-paper-2); border: 1px solid rgba(70,48,34,.14); padding: 18px 16px 13px; }
+  .rm-chain { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; gap: 0; }
+  .rm-node { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 13px 8px; border-radius: 11px; border: 1.5px solid; background: #fff; }
+  .rm-node .rm-n { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 950; display: flex; align-items: center; justify-content: center; margin-bottom: 7px; }
+  .rm-node .rm-t { font-size: 11.5px; font-weight: 950; color: var(--otos-paper-ink); line-height: 1.15; letter-spacing: -0.01em; }
+  .rm-node .rm-d { font-size: 9px; font-weight: 650; color: var(--otos-paper-muted); line-height: 1.3; margin-top: 4px; }
+  .rm-node.ev { border-color: rgba(46,125,50,.5); } .rm-node.ev .rm-n { background: #2e7d32; }
+  .rm-node.mid { border-color: rgba(70,48,34,.45); } .rm-node.mid .rm-n { background: var(--otos-paper-ink); }
+  .rm-node.pr { border-color: rgba(242,108,13,.5); } .rm-node.pr .rm-n { background: var(--otos-orange); }
+  .rm-node.proof { background: rgba(242,108,13,.08); }
+  .rm-arrow { align-self: center; width: 100%; min-width: 14px; height: 2px; position: relative; }
+  .rm-arrow::after { content: ""; position: absolute; right: -1px; top: 50%; transform: translateY(-50%); border-left: 6px solid; border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+  .rm-arrow.ev { background: #2e7d32; } .rm-arrow.ev::after { border-left-color: #2e7d32; }
+  .rm-arrow.mid { background: linear-gradient(90deg,#2e7d32,var(--otos-paper-ink)); } .rm-arrow.mid::after { border-left-color: var(--otos-paper-ink); }
+  .rm-arrow.pr { background: var(--otos-orange); } .rm-arrow.pr::after { border-left-color: var(--otos-orange); }
+  .rm-legend { display: flex; gap: 18px; justify-content: center; margin-top: 13px; }
+  .rm-lg { font-size: 9px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; color: var(--otos-paper-muted); }
+  .rm-lg::before { content: ""; width: 10px; height: 10px; border-radius: 3px; }
+  .rm-lg.ev::before { background: #2e7d32; } .rm-lg.mid::before { background: var(--otos-paper-ink); } .rm-lg.pr::before { background: var(--otos-orange); }
+</style>
+
+  <!-- ════════ PAGE 1 — COVER (Module 1) ════════ -->
+  <section class="page cover-v2" data-screen-label="01 · Cover">
+    <img class="cover-img" src="assets/brief-img/IMAGE_01.jpg" alt="Abstract dark field with a glowing orange thread rising like a wave — the adult ADHD cost wave" />
+    <div class="cover-scrim"></div>
+    <div class="cover-inner">
+      <div class="cv-top">
+        <span class="cv-brand">OTOS Continuity</span>
+      </div>
+      <div class="cv-mid">
+        <h1 class="cover-title">NIA: the category beneath the adult ADHD cost wave.</h1>
+        <p class="cv-sub">Lisdexamfetamine, medicine-plus-continuity, and the pathway that holds recovery.</p>
+        <div class="cv-prongline">
+          <span>NIA — the category</span>
+          <span>Medicine-plus-continuity — the intervention</span>
+          <span>OTOS — the infrastructure</span>
+        </div>
+        <div class="cv-meta">
+          <div class="m"><span class="l">Prepared by</span>Dean Butler — Founder, OTOS Continuity</div>
+          <div class="m"><span class="l">Prepared for</span>AstraZeneca — for internal routing &amp; review</div>
+          <div class="m"><span class="l">Date</span>June 2026</div>
+          <div class="m"><span class="l">Status</span>Exploratory · category &amp; pathway review</div>
+        </div>
+        <p class="cv-foot">New Category · New Intervention · New Infrastructure. From Dean Butler, Founder, OTOS Continuity. Exploratory — for internal routing and review. <strong>NIA is proposed terminology, not an official diagnosis. AstraZeneca is not being asked to make or own Elvanse (lisdexamfetamine is Takeda's) — this is about the medicine-plus-continuity category. No AstraZeneca endorsement is assumed or implied.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 2 — CONTENTS ════════ -->
+  <section class="page azv2" data-screen-label="02 · Contents">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>Contents · NIA Master Brief</span>
+    </div>
+    <span class="kicker">What is inside</span>
+    <h1 class="title">Contents.</h1>
+    <p class="lede">A first-mover category, an intervention model and the infrastructure to evidence both — opened door by door.</p>
+
+    <div class="toc">
+      <div class="toc-row"><span class="tn">02</span><span class="tt">NIA declaration<small>Name and protect the category</small></span><span class="tp">p.03</span></div>
+      <div class="toc-row"><span class="tn">03</span><span class="tt">Founder proof<small>The pattern is real</small></span><span class="tp">p.04</span></div>
+      <div class="toc-row"><span class="tn">04</span><span class="tt">Clinical anchor<small>Lisdexamfetamine &amp; the letter</small></span><span class="tp">p.05</span></div>
+      <div class="toc-row"><span class="tn">05</span><span class="tt">Off-pathway service proof<small>The gap, lived</small></span><span class="tp">p.06</span></div>
+      <div class="toc-row"><span class="tn">06</span><span class="tt">Adult ADHD wave<small>Stored future crisis</small></span><span class="tp">p.07</span></div>
+      <div class="toc-row"><span class="tn">07</span><span class="tt">Hidden national cost chain<small>The system already pays</small></span><span class="tp">p.08</span></div>
+      <div class="toc-row"><span class="tn">08</span><span class="tt">Three-pronged model<small>Category · intervention · infrastructure</small></span><span class="tp">p.09</span></div>
+      <div class="toc-row"><span class="tn">09</span><span class="tt">Medicine-plus-continuity<small>The pathway is the product</small></span><span class="tp">p.10</span></div>
+      <div class="toc-row"><span class="tn">10</span><span class="tt">OTOS Connected Pathway<small>Held across every gap</small></span><span class="tp">p.11</span></div>
+      <div class="toc-row"><span class="tn">11</span><span class="tt">Why AstraZeneca<small>The fit + market pressure</small></span><span class="tp">p.12</span></div>
+      <div class="toc-row"><span class="tn">12</span><span class="tt">AZ route map<small>Eight doors</small></span><span class="tp">p.13</span></div>
+      <div class="toc-row"><span class="tn">13</span><span class="tt">Cambridge demonstrator<small>50 people · 12 weeks</small></span><span class="tp">p.14</span></div>
+      <div class="toc-row"><span class="tn">14</span><span class="tt">Evidence &amp; proof roadmap<small>Bold on pattern, honest on proof</small></span><span class="tp">p.15</span></div>
+      <div class="toc-row"><span class="tn">15</span><span class="tt">Commercial / first-mover<small>Not yet a market</small></span><span class="tp">p.16</span></div>
+      <div class="toc-row"><span class="tn">16</span><span class="tt">Boundary &amp; governance<small>What OTOS does &amp; does not do</small></span><span class="tp">p.17</span></div>
+      <div class="toc-row"><span class="tn">17</span><span class="tt">The ask<small>A first look before it is a market</small></span><span class="tp">p.18</span></div>
+      <div class="toc-row"><span class="tn">A–C</span><span class="tt">Appendix<small>Evidence tables &amp; terminology bank</small></span><span class="tp">p.19</span></div>
+    </div>
+
+    <div class="page-foot">
+      <span>OTOS × AstraZeneca · NIA Master Brief · Exploratory Internal Review</span>
+      <span>Page 02 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 3 — NIA DECLARATION (Module 2) ════════ -->
+  <section class="page azv2" data-screen-label="03 · NIA declaration">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The declaration · 02</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">02</div>
+      <div class="htext">
+        <span class="kicker">The category, named</span>
+        <h1 class="title">NIA — Neurologically Informed Addiction.</h1>
+      </div>
+    </div>
+
+    <p><strong class="ink">NIA — Neurologically Informed Addiction</strong> — is proposed terminology coined by Dean Butler / OTOS. <strong class="ink">It is not currently an official diagnosis.</strong> It names a real, under-recognised addiction pattern where underlying neurology — especially ADHD — can drive self-medication, poor treatment retention, relapse and recurring public cost.</p>
+    <p>The lived origin term was <strong class="ink">Double Trouble Diagnosis (DTD)</strong>. NIA is the professional, AZ / NHS / investor-facing category that should now be researched, piloted and recognised — alongside, never replacing, existing diagnoses and services.</p>
+
+    <figure class="imgfill band lightart">
+      <img src="assets/brief-img/IMAGE_02.jpg" alt="DTD to NIA lineage — a dense lived 'Double Trouble Diagnosis' cluster resolving along an orange thread into the structured 'Neurologically Informed Addiction' category" />
+    </figure>
+
+    <div class="quote-band">"I did not invent the suffering. I <span class="hl">named the pattern.</span>"</div>
+
+    <div class="page-foot">
+      <span>NIA is proposed terminology, not a diagnosis</span>
+      <span>Page 03 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 4 — FOUNDER PROOF (Module 3) ════════ -->
+  <section class="page azv2" data-screen-label="04 · Founder proof">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Founder proof · 03</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">03</div>
+      <div class="htext">
+        <span class="kicker">Founder lived proof</span>
+        <h1 class="title">I am proof.</h1>
+      </div>
+    </div>
+
+    <p>For 35 years the pattern ran unnamed: undiagnosed ADHD, self-medication, addiction, six A&amp;E presentations, three detoxes.</p>
+
+    <div class="statement">
+      <div class="lead-line">"I am alive to prove the <span class="hl">pattern is real.</span>"</div>
+      <div class="reflect">"I am not angry. I am at peace with what happened. I now see my whole life as the research that led to this moment. I survived the pattern so I could name it — and build OTOS for the people still trapped inside it."</div>
+    </div>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_03.jpg" alt="A lone figure walking a glowing orange path toward light — out the other side" />
+    </figure>
+
+    <p>Dean is not proof that NIA is officially recognised. Dean is proof that the pattern is real — and that the current pathway did not know how to hold it.</p>
+
+    <div class="callout soft">
+      <strong>Founder proof is not population proof.</strong> It shows the pattern exists, that the pathway failed to name it, and that the intervention sequence can be mapped. The demonstrator exists to test the category properly.
+    </div>
+
+    <div class="page-foot">
+      <span>Founder / lived proof, not population-level clinical proof</span>
+      <span>Page 04 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 5 — CLINICAL ANCHOR (Module 4) ════════ -->
+  <section class="page azv2" data-screen-label="05 · Clinical anchor">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Clinical anchor · 04</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">04</div>
+      <div class="htext">
+        <span class="kicker">Lisdexamfetamine · the clinical anchor</span>
+        <h1 class="title">The medicine that let recovery land.</h1>
+      </div>
+    </div>
+
+    <p>My private ADHD diagnosis and clinical letter are the documented anchor of the founder case. <strong class="ink">"In my lived case, lisdexamfetamine was the stabilising ADHD medication that allowed recovery to finally land."</strong></p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_04.jpg" alt="A chaotic tangle of dark lines resolving into a single steady thread at an orange node" />
+    </figure>
+
+    <div class="quote-band">"Medication stability opened the door. <span class="hl">OTOS holds the pathway.</span>"</div>
+
+    <div class="callout">
+      <strong>My clinical letter is not a population study. It is the clinical anchor of the founder case.</strong> This is not a claim that lisdexamfetamine cures addiction or is right for everyone, and OTOS does not prescribe, manage or promote medication. The point is that medication stability may be the missing prerequisite for recovery in a defined NIA cohort.
+    </div>
+
+    <div class="page-foot">
+      <span>Not a cure · not for everyone · OTOS does not prescribe</span>
+      <span>Page 05 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 6 — OFF-PATHWAY SERVICE PROOF (Module 5) ════════ -->
+  <section class="page azv2" data-screen-label="06 · Off-pathway proof">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The gap · 05</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">05</div>
+      <div class="htext">
+        <span class="kicker">Service-pathway proof</span>
+        <h1 class="title">The system helped me — off-pathway.</h1>
+      </div>
+    </div>
+
+    <p>The services did help me — but they had to help me <strong class="ink">off-pathway, because the named pathway did not exist.</strong> Good people improvised a route the system hadn't built. Help that depends on improvisation cannot be relied on, or scaled.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_05.jpg" alt="A dashed formal route crossed by a glowing orange improvised path that reconnects" />
+    </figure>
+
+    <div class="routes2">
+      <div class="route2 formal">
+        <span class="rt">Named pathway</span>
+        <p><strong>Did not exist.</strong> No route was designed to hold someone whose ADHD was driving the addiction.</p>
+      </div>
+      <div class="route2 actual">
+        <span class="rt">What happened</span>
+        <p><strong>Improvised, off-pathway.</strong> Good people went out of their way — but help that depends on improvisation cannot be relied on, or scaled.</p>
+      </div>
+    </div>
+
+    <div class="callout soft">
+      <em class="em-ink">Founder position:</em> <strong>"I see ADHD everywhere in addiction rooms because I now know what I am looking at. I always saw it. NIA gives the system language for the pattern."</strong> That is the gap OTOS is designed to close: not replacing services, but holding the person across them.
+    </div>
+
+    <div class="page-foot">
+      <span>The gap, not a guaranteed fix</span>
+      <span>Page 06 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 7 — ADULT ADHD WAVE / BREAKWATER (Module 6) ════════ -->
+  <section class="page azv2 dense-wave" data-screen-label="07 · Adult ADHD wave">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The adult ADHD wave · 06</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">06</div>
+      <div class="htext">
+        <span class="kicker">Adult ADHD wave · breakwater</span>
+        <h1 class="title">The wave is already being rationed.</h1>
+      </div>
+    </div>
+
+    <p>Adult ADHD assessment and treatment in England are under acute strain. Demand is rising sharply; waiting lists run to years in places; and Integrated Care Boards, under hard financial pressure, have begun rationing access. From 21 May 2025, Coventry &amp; Warwickshire paused new adult ADHD Right-to-Choose referrals for people aged 25 and over, to redirect capacity to children. Through late 2025 and into 2026, at least nine NHS areas instructed Right-to-Choose providers to pause new autism and ADHD assessments on funding grounds, under NHS England's 2025 activity-cap contracting.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_06.jpg" alt="A building wave of fine lines meeting a calm orange breakwater line" />
+    </figure>
+
+    <p>When adult ADHD assessment and treatment capacity is restricted, the system does not remove the need. It stores it as future crisis. Adults with untreated or under-treated ADHD may self-medicate; some then cross into addiction, relapse, A&amp;E, detox, crisis mental health, safeguarding, police, courts and prison. Because ADHD remains unrecognised, the system repeatedly treats the downstream manifestation while the upstream neurological driver remains untreated.</p>
+
+    <div class="quote-band">"The adult ADHD wave is already being rationed. <span class="hl">The addiction cost wave may arrive later.</span>"</div>
+
+    <div class="boundary-box">
+      <div class="bhead">Evidence-safe framing</div>
+      <p>Publicly verified evidence shows local adult ADHD referral pauses, restrictions, prioritisation and at least one clear <strong>over-25 adult-access restriction</strong> (Coventry &amp; Warwickshire). Dean's earlier <strong>"over-23"</strong> language is his risk-band / forecast language unless separately verified. The evidence does not yet prove a national "tsunami" — but it shows the conditions for one. <strong>OTOS is the breakwater: a continuity layer that holds the person while the clinical system catches up.</strong></p>
+    </div>
+
+    <div class="page-foot">
+      <span>Risk forecast &amp; service-design argument · not clinical inevitability</span>
+      <span>Page 07 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 8 — HIDDEN NATIONAL COST CHAIN (Module 7 · DARK) ════════ -->
+  <section class="page azv2 dark" data-screen-label="08 · Cost chain">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The hidden cost chain · 07</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">07</div>
+      <div class="htext">
+        <span class="kicker">The hidden national cost chain</span>
+        <h1 class="title">The system is already paying — in the worst possible places.</h1>
+      </div>
+    </div>
+
+    <p>Untreated or under-treated ADHD can drive self-medication. Self-medication becomes addiction; addiction becomes relapse, A&amp;E, detox, crisis, courts and family collapse — and the bill lands everywhere except where the problem started. Known to services, but not held between them. One untreated NIA / ADHD-linked addiction case is not one cost. <strong class="ink">It is a cost halo.</strong></p>
+
+    <figure class="imgfill band onink">
+      <img src="assets/brief-img/IMAGE_07.jpg" alt="A single orange point of impact radiating concentric ripple rings outward into the dark — the cost halo" />
+    </figure>
+
+    <div class="num-grid" style="margin-top:16px;">
+      <div class="ncard"><div class="num">74%</div><div class="desc">starting addiction treatment have a co-occurring mental-health need</div><span class="tag">NDTMS</span></div>
+      <div class="ncard"><div class="num">12.2%</div><div class="desc">ADHD prevalence found in UK detox units</div><span class="tag">Huntley, 2012</span></div>
+      <div class="ncard"><div class="num">£17bn</div><div class="desc">est. annual UK economic cost of untreated ADHD</div><span class="tag">ADHD Taskforce 2025</span></div>
+    </div>
+
+    <div class="quote-band">"When thousands of those halos land at once, <span class="hl">the ripple becomes a tsunami.</span>"</div>
+
+    <p class="note" style="margin-top:12px;"><strong>Context</strong> — published evidence candidates, not OTOS outcomes. Cost framing is an order-of-magnitude model of the whole burden (incl. £27.44bn/yr alcohol harm, IAS 2024) — not a guaranteed per-case invoice.</p>
+
+    <div class="page-foot">
+      <span>Modelled cost framing · evidence candidates, not outcomes</span>
+      <span>Page 08 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 9 — THREE-PRONGED MODEL (Module 8) ════════ -->
+  <section class="page azv2" data-screen-label="09 · Three-pronged model">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The model · 08</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">08</div>
+      <div class="htext">
+        <span class="kicker">New category · new intervention · new infrastructure</span>
+        <h1 class="title">Three things, working as one.</h1>
+      </div>
+    </div>
+
+    <p>None works alone. Together they are a category, a model and a moat.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_08.jpg" alt="An orange triangle linking three glowing nodes labelled Category, Intervention and Infrastructure" />
+    </figure>
+
+    <div class="cards-3">
+      <div class="col-card">
+        <div class="prong-num">1 · New category</div>
+        <h3>NIA</h3>
+        <p>Neurologically Informed Addiction — the lens that names the pattern the system keeps missing.</p>
+      </div>
+      <div class="col-card">
+        <div class="prong-num">2 · New intervention</div>
+        <h3>Medicine-plus-continuity</h3>
+        <p>ADHD medication stability + addiction recovery support + adherence, persistence, relapse-risk visibility + behavioural reinforcement.</p>
+      </div>
+      <div class="col-card">
+        <div class="prong-num">3 · New infrastructure</div>
+        <h3>OTOS</h3>
+        <p>The Connected Pathway that finds the cohort, holds the person and generates the evidence.</p>
+      </div>
+    </div>
+
+    <div class="callout soft">
+      In Dean's lived case the sequence was real: <strong>the medicine opened the door; continuity kept him out the other side.</strong> The model proposes that what worked for one, mapped and evidenced, could be tested for a defined cohort.
+    </div>
+
+    <div class="page-foot">
+      <span>Each prong bounded and evidence-led</span>
+      <span>Page 09 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 10 — MEDICINE-PLUS-CONTINUITY (Module 9) ════════ -->
+  <section class="page azv2" data-screen-label="10 · Medicine-plus-continuity">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The intervention · 09</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">09</div>
+      <div class="htext">
+        <span class="kicker">The medicine-plus-continuity pathway</span>
+        <h1 class="title">The molecule is not enough. The pathway is the product.</h1>
+      </div>
+    </div>
+
+    <p><strong class="ink">"This is not a single-molecule pitch — it is a first-mover category, intervention and infrastructure opportunity in a future medicine-plus-continuity market."</strong> Medication stability is the prerequisite; the pathway around it — diagnosis and access, adherence, persistence, relapse-risk visibility, recovery support and behavioural reinforcement — is the product.</p>
+
+    <figure class="imgfill band lightart">
+      <img src="assets/brief-img/IMAGE_09.jpg" alt="Medicine-plus-continuity — a central 'Stability Foundation' ringed by the pathway elements: diagnosis clarity, access, adherence, persistence, relapse-risk visibility, behavioural reinforcement" />
+    </figure>
+
+    <div class="facts-row">
+      <div class="factcard"><div class="fk">The molecule is commoditising</div><p>Lisdexamfetamine (Elvanse/Vyvanse) is owned by Takeda. In the US, patents have expired and generics launched (2023).</p></div>
+      <div class="factcard"><div class="fk">A distinct UK issue</div><p>Separately, the UK has faced ADHD-medication shortages and demand pressure since 2023 — distinct from US exclusivity; UK generic status is not asserted here.</p></div>
+    </div>
+
+    <div class="quote-band">"The molecule may genericise. <span class="hl">The pathway can compound.</span>"</div>
+
+    <div class="callout">
+      <strong>AstraZeneca should not be asked to "make Elvanse."</strong> The strategic question is whether AZ wants to explore the wider medicine-plus-continuity category around ADHD medication stability — including patient support, companion digital, formulation, licensing, branded-generic or acquisition routes — subject to regulatory, IP, MHRA, supply and commercial review.
+    </div>
+
+    <div class="page-foot">
+      <span>Routes to investigate · subject to full review</span>
+      <span>Page 10 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 11 — OTOS CONNECTED PATHWAY (Module 10) ════════ -->
+  <section class="page azv2" data-screen-label="11 · Connected Pathway">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>The infrastructure · 10</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">10</div>
+      <div class="htext">
+        <span class="kicker">The Connected Pathway for the Whole Person</span>
+        <h1 class="title">Held across every gap.</h1>
+      </div>
+    </div>
+
+    <p><strong class="ink">OTOS is the Connected Pathway for the Whole Person</strong> — holding the person across medication access, addiction recovery, service handoffs, behavioural reinforcement and long-term engagement. Addiction is disconnection; OTOS is connection.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_10.jpg" alt="A single glowing orange thread winding through service-station nodes across a dark field" />
+    </figure>
+
+    <div class="cards-3" style="margin-top:14px;">
+      <div class="col-card"><h3>Surface</h3><p>Micro-check-ins, drift visibility before crisis, and relapse-risk signals across services.</p></div>
+      <div class="col-card"><h3>Hold</h3><p>Handoff receipts, human review, service connection, retention and engagement.</p></div>
+      <div class="col-card"><h3>Evidence</h3><p>Evidence capture and real-world learning. Onboarding flexes from a QR code to a dashboard to multi-agency intelligence.</p></div>
+    </div>
+
+    <p style="margin-top:12px;"><strong class="ink">The first product is not a cure. It is visibility.</strong></p>
+
+    <div class="callout soft"><strong>"OTOS surfaces signals. Partner teams make the decisions."</strong></div>
+
+    <div class="page-foot">
+      <span>Non-clinical continuity layer</span>
+      <span>Page 11 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 12 — WHY ASTRAZENECA (Module 11) ════════ -->
+  <section class="page azv2" data-screen-label="12 · Why AstraZeneca">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Why AstraZeneca · 11</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">11</div>
+      <div class="htext">
+        <span class="kicker">Why AstraZeneca · why now</span>
+        <h1 class="title">You may not own ADHD today. That is the opening.</h1>
+      </div>
+    </div>
+
+    <p><strong class="ink">"AstraZeneca may not own ADHD today. That is the opening. NIA is not yet a market. That is the opportunity."</strong> The adult-ADHD-wave evidence makes this a future market-pressure and health-system-risk category: demand is rising while access is being rationed, which stores need as downstream addiction and crisis cost.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_11.jpg" alt="An orange pathway leading across a dark data-grid toward a glowing window, Cambridge skyline in outline" />
+    </figure>
+
+    <ul class="value-list" style="margin-top:14px;">
+      <li><strong>A.Catalyst-aligned themes</strong> — early identification, digital transformation, data generation, ecosystem innovation and scalable healthcare solutions — all NIA territory.</li>
+      <li><strong>Evinova</strong> is moving into digital remote monitoring — adjacent to the Connected Pathway.</li>
+      <li><strong>Patient support and adherence</strong> are live concerns across the ADHD medication pathway.</li>
+      <li><strong>AZ's global HQ is in Cambridge</strong> — where the demonstrator would run.</li>
+    </ul>
+
+    <div class="callout soft">
+      <strong>You are not being asked to carry the whole solution</strong> — only to take first look at a category, an intervention model and the infrastructure to evidence both.
+    </div>
+
+    <div class="page-foot">
+      <span>No AZ endorsement is assumed or implied</span>
+      <span>Page 12 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 13 — AZ ROUTE MAP (Module 12 · VISUAL 12) ════════ -->
+  <section class="page azv2" data-screen-label="13 · Route map">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>The route map · 12</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">12</div>
+      <div class="htext">
+        <span class="kicker">The internal route map · eight doors</span>
+        <h1 class="title">Eight doors. Open one to start.</h1>
+      </div>
+    </div>
+
+    <p>In priority order — open one to begin.</p>
+
+    <figure class="imgfill short">
+      <img src="assets/brief-img/IMAGE_12.jpg" alt="Eight translucent glass doors on a dark field, one glowing orange with an orange path leading through it — the route into AstraZeneca" />
+    </figure>
+
+    <div class="routemap">
+      <div class="door"><div class="dr">1</div><div><div class="dt">Strategic Partnerships / BD</div><div class="dd">First-mover category review</div></div></div>
+      <div class="door"><div class="dr">2</div><div><div class="dt">Patient Support / Adherence / Persistence</div><div class="dd">Medication stability + pathway support</div></div></div>
+      <div class="door"><div class="dr">3</div><div><div class="dt">A.Catalyst / Cambridge Innovation</div><div class="dd">Demonstrator incubation</div></div></div>
+      <div class="door"><div class="dr">4</div><div><div class="dt">Evinova / Digital Health</div><div class="dd">Companion-digital / Connected Pathway architecture</div></div></div>
+      <div class="door"><div class="dr">5</div><div><div class="dt">Real-World Evidence / Outcomes</div><div class="dd">Evidence engine</div></div></div>
+      <div class="door"><div class="dr">6</div><div><div class="dt">External Funding / Sponsorships</div><div class="dd">Bounded demonstrator support</div></div></div>
+      <div class="door"><div class="dr">7</div><div><div class="dt">Health Equity / Social Value</div><div class="dd">Underserved high-cost cohort impact</div></div></div>
+      <div class="door"><div class="dr">8</div><div><div class="dt">Government Affairs / NHS Partnerships</div><div class="dd">Public-private pathway pilot</div></div></div>
+    </div>
+
+    <div class="ask-box push-foot">
+      <div class="label">The ask</div>
+      <p>Please route this for a <strong>first-mover NIA category review</strong>, with parallel consideration by <strong>Patient Support / Adherence</strong> and <strong>A.Catalyst</strong> for a Cambridge evidence demonstrator.</p>
+    </div>
+
+    <div class="page-foot">
+      <span>A category review, not a funding ask</span>
+      <span>Page 13 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 14 — CAMBRIDGE DEMONSTRATOR (Module 13) ════════ -->
+  <section class="page azv2" data-screen-label="14 · Demonstrator">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>The demonstrator · 13</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">13</div>
+      <div class="htext">
+        <span class="kicker">The Cambridge NIA demonstrator</span>
+        <h1 class="title">50 people. 12 weeks. The first proof.</h1>
+      </div>
+    </div>
+
+    <p>A bounded Cambridge demonstrator turns modelling into local, real-world pathway intelligence and a partner-grade evidence pack — for a fraction of the cost of a single avoidable crisis episode.</p>
+
+    <div class="demo">
+      <div class="d"><div class="dn">50</div><div class="dl">people in a bounded cohort</div></div>
+      <div class="d"><div class="dn">12</div><div class="dl">weeks, start to evidence</div></div>
+      <div class="d"><div class="dn">1</div><div class="dl">Connected Pathway thread</div></div>
+      <div class="d"><div class="dn">Cambridge</div><div class="dl">on AZ's doorstep</div></div>
+    </div>
+
+    <figure class="imgfill band lightart">
+      <img src="assets/brief-img/IMAGE_13.jpg" alt="Cambridge demonstrator — a 12-week evidence loop over a Cambridge street map: weeks 1–2 initial insight, 3–6 implement and measure, 7–10 analyse, 11–12 evidence and iterate" />
+    </figure>
+
+    <ul class="value-list">
+      <li><strong>Findings before scale</strong> — the demonstrator answers whether the category and model hold before anyone commits to more.</li>
+      <li><strong>Real-world evidence</strong> — retention, drift, relapse-risk visibility and pathway intelligence, captured under a defined framework.</li>
+      <li><strong>Gated by governance</strong> — consent, data protection, safeguarding and clinical oversight gate any pilot.</li>
+    </ul>
+
+    <div class="callout soft">Modelled potential, not guaranteed savings. The demonstrator exists precisely to replace modelling with locally validated evidence.</div>
+
+    <div class="page-foot">
+      <span>Evidence candidates, not outcomes</span>
+      <span>Page 14 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 15 — EVIDENCE & PROOF ROADMAP (Module 14 · VISUAL 14) ════════ -->
+  <section class="page azv2 dense-ev" data-screen-label="15 · Evidence roadmap">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>Evidence &amp; proof roadmap · 14</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">14</div>
+      <div class="htext">
+        <span class="kicker">Evidence candidates &amp; proof roadmap</span>
+        <h1 class="title">Bold on the pattern. Honest on the proof.</h1>
+      </div>
+    </div>
+
+    <p>None of these are OTOS outcomes. They are published evidence candidates plus an honest account of what is not yet proven.</p>
+
+    <figure class="roadmap-fig">
+      <div class="rm-chain">
+        <div class="rm-node ev"><span class="rm-n">1</span><span class="rm-t">Source identification</span><span class="rm-d">Published studies, guidance, national data</span></div>
+        <div class="rm-arrow ev"></div>
+        <div class="rm-node ev"><span class="rm-n">2</span><span class="rm-t">Relevance screening</span><span class="rm-d">Filter to ADHD–addiction signal</span></div>
+        <div class="rm-arrow mid"></div>
+        <div class="rm-node mid"><span class="rm-n">3</span><span class="rm-t">Evidence synthesis</span><span class="rm-d">Status-tagged, caveats kept</span></div>
+        <div class="rm-arrow pr"></div>
+        <div class="rm-node pr"><span class="rm-n">4</span><span class="rm-t">Apply &amp; test</span><span class="rm-d">Bounded demonstrator design</span></div>
+        <div class="rm-arrow pr"></div>
+        <div class="rm-node pr proof"><span class="rm-n">5</span><span class="rm-t">Demonstrator proof</span><span class="rm-d">Locally validated evidence</span></div>
+      </div>
+      <div class="rm-legend">
+        <span class="rm-lg ev">Evidence sources</span>
+        <span class="rm-lg mid">Analysis &amp; synthesis</span>
+        <span class="rm-lg pr">Proof pathway</span>
+      </div>
+    </figure>
+
+    <div class="col-split">
+      <div>
+        <div class="ch">Pointing the same way</div>
+        <ul class="value-list" style="margin-top:0;">
+          <li>Co-occurrence evidence — <strong>NDTMS</strong> and <strong>Huntley (2012)</strong>.</li>
+          <li>ADHD &amp; alcohol cost — <strong>NHS England ADHD Taskforce (2025)</strong> and <strong>IAS (2024)</strong>.</li>
+          <li><strong>RCPsych</strong> recognises ADHD as a risk factor for early-onset substance misuse and supports joint management; an NIA pathway-recognition submission to RCPsych is in progress <span class="model-badge local">checked source</span></li>
+          <li><strong>CGL / Change Grow Live</strong> — front-line precedent for ADHD work inside substance-use services <span class="model-badge local">checked source</span></li>
+          <li>Adult-ADHD access-restriction layer — over-25 pause, multi-ICB RTC pauses, waiting-list &amp; prescribing growth.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ch">Needed before commitment</div>
+        <ul class="value-list" style="margin-top:0;">
+          <li>Governance, consent &amp; data-protection pack.</li>
+          <li>Clinical-oversight model.</li>
+          <li>Regulatory classification review.</li>
+          <li>Real-world learning-report template.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout push-foot">
+      <strong>Evidence candidate (caveated):</strong> the 2025 START study (observational) found improvement in addictive disorders in <strong>61.3%</strong> of patients after ADHD diagnosis and treatment. Observational and retrospective — it warrants prospective confirmation, which the demonstrator is designed to begin.
+    </div>
+
+    <div class="page-foot">
+      <span>Published evidence candidates, not OTOS outcomes</span>
+      <span>Page 15 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 16 — COMMERCIAL / FIRST-MOVER (Module 15) ════════ -->
+  <section class="page azv2" data-screen-label="16 · First-mover">
+    <div class="page-head">
+      <span class="who">Dean Butler</span>
+      <span>Commercial · first-mover · 15</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">15</div>
+      <div class="htext">
+        <span class="kicker">First-mover advantage · market-share potential</span>
+        <h1 class="title">NIA is not yet a market. That is the opportunity.</h1>
+      </div>
+    </div>
+
+    <p>The molecule commoditises; the pathway compounds. First-mover advantage sits around the category — <strong class="ink">the language, the first evidence base, the continuity infrastructure and the medicine-plus-continuity model</strong> — not the compound alone. The category becomes more urgent, not less, if adult ADHD access is rationed while demand grows.</p>
+
+    <figure class="imgfill band">
+      <img src="assets/brief-img/IMAGE_15.jpg" alt="A glowing doorway on the horizon of a dark desert at sunrise, an orange path of light leading to it — the first-mover market window" />
+    </figure>
+
+    <div class="cards-3">
+      <div class="col-card"><div class="prong-num">Shape the language</div><h3>Category</h3><p>Help define NIA before the market names it for you.</p></div>
+      <div class="col-card"><div class="prong-num">Generate the evidence</div><h3>Proof base</h3><p>Generate the real-world evidence nobody else is generating.</p></div>
+      <div class="col-card"><div class="prong-num">Understand the layer</div><h3>Infrastructure</h3><p>Understand the continuity layer the whole pathway runs on.</p></div>
+    </div>
+
+    <div class="quote-band">"This is a pipeline problem, <span class="hl">not a 'bad choices' problem.</span>"</div>
+
+    <p class="note" style="margin-top:12px;">For AstraZeneca this is early, low-cost optionality at pre-market pricing — grant, sponsorship, demonstrator or option-to-invest — never a commitment up front. <strong>Commercial framing is potential, not projection.</strong></p>
+
+    <div class="page-foot">
+      <span>Potential, not a projection</span>
+      <span>Page 16 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 17 — BOUNDARY (does / does-not) (Module 16a) ════════ -->
+  <section class="page azv2" data-screen-label="17 · Boundary — does/does-not">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>Boundary &amp; governance · 16</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no">16</div>
+      <div class="htext">
+        <span class="kicker">Boundary, named</span>
+        <h1 class="title">What OTOS does — and does not — do.</h1>
+      </div>
+    </div>
+
+    <p>OTOS Continuity is early-stage and non-clinical. Its discipline is the boundary: it holds the person across services without ever stepping into the clinical decisions that belong to partner teams.</p>
+
+    <div class="ddn">
+      <div class="col does">
+        <div class="ch">OTOS does</div>
+        <ul>
+          <li>Surface signals across services</li>
+          <li>Hold the person across the pathway</li>
+          <li>Capture real-world evidence</li>
+          <li>Support retention and engagement</li>
+        </ul>
+      </div>
+      <div class="col doesnt">
+        <div class="ch">OTOS does not</div>
+        <ul>
+          <li>Diagnose ADHD</li>
+          <li>Prescribe, manage or promote medication</li>
+          <li>Treat addiction or deliver therapy</li>
+          <li>Replace any service or make clinical decisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-band push-foot">"OTOS surfaces signals. <span class="hl">Partner teams make the decisions.</span>"</div>
+
+    <div class="page-foot">
+      <span>Non-clinical · governance-gated</span>
+      <span>Page 17 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 18 — THE ASK (Module 17 · closing) ════════ -->
+  <section class="page azv2 closing" data-screen-label="18 · The ask">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>The ask · 17</span>
+    </div>
+    <span class="kicker">The next step</span>
+    <h1 class="title">A first look at a category before it is a market.</h1>
+
+    <figure class="imgfill short">
+      <img src="assets/brief-img/IMAGE_17.jpg" alt="A calm orange path winding over dark hills toward a bright horizon — the forward path" />
+    </figure>
+
+    <div class="ask-box">
+      <div class="label">The ask</div>
+      <p>Not a single-molecule pitch. Not a funding demand. <strong>"Please route this for a first-mover NIA category review, with parallel consideration by Patient Support / Adherence and A.Catalyst for a Cambridge evidence demonstrator"</strong> — and a short conversation about whether it fits.</p>
+    </div>
+
+    <div class="boundary-box">
+      <div class="bhead">Held to the line</div>
+      <p><strong>NIA is proposed terminology, not an official diagnosis. Founder proof is not population proof. Lisdexamfetamine is not claimed to cure addiction or be right for everyone. OTOS does not diagnose, prescribe, manage medication, treat addiction or make clinical decisions. No AstraZeneca endorsement is assumed or implied.</strong></p>
+    </div>
+
+    <div class="signoff">
+      <span class="name">With thanks — Dean Butler.</span>
+      Founder, OTOS Continuity · OTOS Digital Ltd · Co. No. 17084455<br/>
+      dean@otos.life · 07585 899 235
+    </div>
+
+    <div class="page-foot">
+      <span>Exploratory, not a pitch · no procurement</span>
+      <span>Page 18 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 19 — APPENDIX A: MEDICATION-PATHWAY FACTS ════════ -->
+  <section class="page azv2" data-screen-label="19 · Appendix A">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>Appendix A · 18</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no" style="font-size:58px;">A</div>
+      <div class="htext">
+        <span class="kicker">Appendix · source status</span>
+        <h1 class="title">Medication-pathway facts.</h1>
+      </div>
+    </div>
+
+    <table class="fb srctable">
+      <thead><tr><th>Claim</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="el">Lisdexamfetamine = Elvanse/Vyvanse, owned by Takeda (ex-Shire)</td><td class="wh">Takeda / Shire (2019)</td><td><span class="tag-verified">Fact</span> — owned by Takeda, not AstraZeneca</td></tr>
+        <tr><td class="el">US patents expired; generics launched 2023</td><td class="wh">FDA / DrugPatentWatch</td><td><span class="tag-verified">Fact (US)</span> — US generics launched 2023</td></tr>
+        <tr><td class="el">UK generic lisdexamfetamine entry</td><td class="wh">—</td><td><span class="tag-forecast">Research gap</span> — not asserted; keep US/UK distinct</td></tr>
+        <tr><td class="el">UK ADHD-medication shortages &amp; demand pressure from 2023</td><td class="wh">Sector / press data</td><td><span class="tag-verified">Fact</span> — distinct from US exclusivity</td></tr>
+        <tr><td class="el">Medication stability as recovery prerequisite (founder case)</td><td class="wh">Dean's clinical letter</td><td><span class="tag-candidate">Clinical anchor</span> — founder case, not a population study</td></tr>
+        <tr><td class="el">Improvement in addictive disorders after ADHD dx + treatment</td><td class="wh">START study (2025), observational</td><td><span class="tag-candidate">Evidence candidate</span> — 61.3%, warrants confirmation</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note push-foot" style="padding-top:14px;"><strong>Note</strong> — OTOS does not prescribe, manage or promote medication. Any medication-pathway route is subject to regulatory, IP, MHRA, supply and commercial review.</p>
+
+    <div class="page-foot">
+      <span>Appendix A · medication-pathway facts · source status</span>
+      <span>Page 19 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 20 — APPENDIX B: ADULT ADHD WAVE / ACCESS-RESTRICTION ════════ -->
+  <section class="page azv2" data-screen-label="20 · Appendix B">
+    <div class="page-head">
+      <span class="who">OTOS Continuity</span>
+      <span>Appendix B · 19</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no" style="font-size:58px;">B</div>
+      <div class="htext">
+        <span class="kicker">Appendix · source status</span>
+        <h1 class="title">Adult ADHD wave &amp; access-restriction evidence.</h1>
+      </div>
+    </div>
+
+    <table class="fb srctable">
+      <thead><tr><th>Claim</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="el">Adult ADHD Right-to-Choose referrals paused for over-25s</td><td class="wh">Coventry &amp; Warwickshire (from 21 May 2025)</td><td><span class="tag-verified">Verified, local</span> — clear over-25 adult-access restriction</td></tr>
+        <tr><td class="el">≥9 NHS areas paused RTC autism/ADHD assessments on funding grounds</td><td class="wh">NHS England 2025 activity-cap; multi-ICB</td><td><span class="tag-verified">Verified, regional</span> — local pauses &amp; prioritisation</td></tr>
+        <tr><td class="el">"Over-23" access cut-off</td><td class="wh">Dean's earlier language</td><td><span class="tag-forecast">Risk-band / forecast</span> — unless separately verified</td></tr>
+        <tr><td class="el">~2.5m people in England with ADHD (~1.6m over-25); prescribing +51% since 2019; shortages</td><td class="wh">Press / sector data</td><td><span class="tag-candidate">Published, approximate</span> — scale context</td></tr>
+        <tr><td class="el">National adult ADHD diagnosis ban</td><td class="wh">—</td><td><span class="tag-forecast">Not claimed</span> — never assert a national ban</td></tr>
+        <tr><td class="el">"Tsunami" framing</td><td class="wh">OTOS forecast</td><td><span class="tag-forecast">Risk forecast</span> — not a clinical inevitability</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note push-foot" style="padding-top:14px;"><strong>Note</strong> — the public evidence shows the conditions for a wave, not proof of one. over-25 = verified; over-23 = forecast; no national ban claimed.</p>
+
+    <div class="page-foot">
+      <span>Appendix B · adult ADHD wave evidence · source status</span>
+      <span>Page 20 / 21</span>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE 21 — APPENDIX C: DTD → NIA TERMINOLOGY BANK + CONTACT ════════ -->
+  <section class="page azv2" data-screen-label="21 · Appendix C">
+    <div class="page-head">
+      <span class="who brand">OTOS Continuity</span>
+      <span>Appendix C · 20</span>
+    </div>
+    <div class="sec-head">
+      <div class="mod-no" style="font-size:58px;">C</div>
+      <div class="htext">
+        <span class="kicker">Appendix · lock language</span>
+        <h1 class="title">DTD → NIA terminology bank.</h1>
+      </div>
+    </div>
+
+    <table class="fb srctable">
+      <tbody>
+        <tr><td class="el">DTD — Double Trouble Diagnosis</td><td>The raw, lived origin term for ADHD and addiction running as one loop. Use in founder narrative only.</td></tr>
+        <tr><td class="el">NIA — Neurologically Informed Addiction</td><td>The professional, proposed category. Lead term everywhere. Never "official diagnosis."</td></tr>
+        <tr><td class="el">ADHD-linked NIA / ADHD-fuelled addiction</td><td>The first proof cohort.</td></tr>
+        <tr><td class="el">Medicine-plus-continuity</td><td>The intervention model — medication stability plus the continuity pathway around it.</td></tr>
+        <tr><td class="el">Connected Pathway / Connection Layer</td><td>The OTOS infrastructure. Not "app" or "tool."</td></tr>
+        <tr><td class="el">Breakwater</td><td>OTOS holding the person while the clinical system catches up.</td></tr>
+        <tr><td class="el">Cost halo / ripple / wave</td><td>The cost-multiplication metaphor — one untreated case radiating cost across budgets.</td></tr>
+        <tr><td class="el">First-mover advantage / market-share potential</td><td>Commercial frame — always "possible / potential," never projected.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="contact-grid push-foot">
+      <div class="contact-card">
+        <div class="ck">Contact</div>
+        <div class="cv">Dean Butler<span>Founder, OTOS Continuity</span><span>dean@otos.life · 07585 899 235</span></div>
+      </div>
+      <div class="contact-card">
+        <div class="ck">Entity</div>
+        <div class="cv">OTOS Digital Ltd<span>Co. No. 17084455</span><span>www.otos.works</span></div>
+      </div>
+    </div>
+
+    <div class="page-foot">
+      <span>Appendix C · terminology bank · OTOS Continuity</span>
+      <span>Page 21 / 21</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

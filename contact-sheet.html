@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>OTOS Brief Pack — contact sheet</title>
+<link rel="stylesheet" href="assets/colors_and_type.css" />
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#0d0f14;font-family:var(--font);padding:34px 34px 60px;}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:26px;gap:20px;flex-wrap:wrap;}
+  h1{color:var(--otos-ink);font-size:22px;font-weight:1000;letter-spacing:-0.03em;margin:0 0 4px;}
+  .sub{color:var(--otos-muted);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin:0;}
+  .toggle{display:inline-flex;border:1px solid rgba(255,255,255,.16);border-radius:999px;overflow:hidden;}
+  .toggle button{appearance:none;border:0;background:transparent;color:var(--otos-muted);font-family:var(--font);
+    font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;padding:10px 16px;cursor:pointer;}
+  .toggle button.on{background:var(--otos-orange);color:#1a1206;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 26px;}
+  .cell{display:flex;flex-direction:column;gap:10px;}
+  .label{color:var(--otos-soft);font-size:12px;font-weight:800;}
+  .label b{color:var(--otos-orange-2);}
+  .frame{width:100%;aspect-ratio:210/297;border-radius:8px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 44px rgba(0,0,0,.5);background:#f4efe6;position:relative;cursor:pointer;}
+  iframe{position:absolute;top:0;left:0;width:794px;height:1123px;border:0;transform-origin:top left;pointer-events:none;}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <h1>OTOS Brief Pack — contact sheet</h1>
+      <p class="sub">Nine briefs · one governed design system</p>
+    </div>
+    <div class="toggle">
+      <button id="bFirst" class="on" onclick="setMode('first')">First pages</button>
+      <button id="bLast" onclick="setMode('last')">Final ask pages</button>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+<script>
+  const docs = [
+    ["01 · Funder","Angel Funder Brief.html"],
+    ["02 · Champion","Champion Brief.html"],
+    ["03 · Clinical route","Clinical Letter Context Brief.html"],
+    ["04 · Addiction partner","CGL and CRS Team Leaders Brief.html"],
+    ["05 · Hospital route","Alcohol Liaison Bedside Brief.html"],
+    ["06 · Wellbeing partner","RCE Wellbeing Hub Partner Brief.html"],
+    ["07 · Therapy partner","Mind WorkWell Therapy Partner Brief.html"],
+    ["08 · Cost case","Public Health Cost Case Brief.html"],
+    ["09 · Strategic ally","Dr Claire Gillvray LAMP Strategic Ally Brief.html"]
+  ];
+  let mode = 'first';
+  const grid = document.getElementById('grid');
+  const frames = [];
+  docs.forEach(([label,src])=>{
+    const cell=document.createElement('div'); cell.className='cell';
+    const lab=document.createElement('div'); lab.className='label';
+    lab.innerHTML='<b>'+label.split(' · ')[0]+'</b> · '+label.split(' · ')[1];
+    const frame=document.createElement('div'); frame.className='frame';
+    frame.onclick=()=>window.open(src,'_blank');
+    const f=document.createElement('iframe'); f.setAttribute('scrolling','no'); f.src=src;
+    frame.appendChild(f); cell.appendChild(lab); cell.appendChild(frame); grid.appendChild(cell);
+    function fit(){ f.style.transform='scale('+(frame.clientWidth/794)+')'; }
+    function scrollTo(){ try{ const d=f.contentDocument, ps=d.querySelectorAll('.page');
+      const p = mode==='first'? ps[0] : ps[ps.length-1]; if(p) f.contentWindow.scrollTo(0, p.offsetTop); }catch(e){} }
+    f.addEventListener('load',()=>{ fit(); scrollTo(); });
+    new ResizeObserver(fit).observe(frame);
+    frames.push({f, scrollTo});
+  });
+  function setMode(m){ mode=m;
+    document.getElementById('bFirst').classList.toggle('on', m==='first');
+    document.getElementById('bLast').classList.toggle('on', m==='last');
+    frames.forEach(o=>o.scrollTo());
+  }
+</script>
+</body>
+</html>
