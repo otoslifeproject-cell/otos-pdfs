@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en-GB"><head>
+
+
+<meta charset="utf-8">
+<title>OTOS Continuity — Executive Overview</title>
+<meta name="viewport" content="width=794">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body { font-family: var(--font); color: var(--otos-paper-ink); -webkit-font-smoothing: antialiased; }
+  .doc { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 30px 0; }
+  .page {
+    width: 210mm; min-height: 297mm; padding: 19mm 19mm; position: relative; overflow: hidden;
+    page-break-after: always; break-after: page; box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    background: var(--otos-paper); color: var(--otos-paper-ink);
+    background-image: radial-gradient(ellipse 50rem 30rem at 100% 0%, rgba(242,108,13,.06), transparent 55%);
+    display: flex; flex-direction: column;
+  }
+  .page:last-child { page-break-after: auto; }
+  .page::after { content:""; position:absolute; right:-26px; bottom:-26px; width:230px; height:180px; background:url("assets/brain.png") right bottom/contain no-repeat; opacity:.04; pointer-events:none; }
+  .page > * { position: relative; z-index: 1; }
+  .body { flex:1; display:flex; flex-direction:column; justify-content:flex-start; }
+
+  .brandbar { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(70,48,34,.16); padding-bottom:12px; margin-bottom:6px; }
+  .brandbar .blogo { height:23px; display:block; }
+  .brandbar .m { font-size:10px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#4a443d; }
+
+  .kicker { display:inline-block; font-size:11px; font-weight:950; letter-spacing:.22em; text-transform:uppercase; color:var(--otos-orange); margin-bottom:13px; }
+  h1.title { font-size:37px; font-weight:1000; letter-spacing:-.035em; line-height:1.02; margin:0 0 16px; color:var(--otos-paper-ink); max-width:20ch; }
+  h2.sub { font-size:17px; font-weight:950; letter-spacing:-.01em; margin:21px 0 10px; color:var(--otos-paper-ink); display:flex; align-items:center; gap:10px; }
+  h2.sub:first-of-type { margin-top:4px; }
+  h2.sub .n { color:var(--otos-orange); }
+  p { font-size:13.5px; line-height:1.62; margin:0 0 11px; color:#241f1a; font-weight:550; }
+  p strong, .ink { color:var(--otos-paper-ink); font-weight:850; }
+  .lede { font-size:17px; line-height:1.5; color:#16120f !important; font-weight:750; margin:0 0 14px; }
+
+  .pull { border-left:3px solid var(--otos-orange); padding:4px 0 4px 17px; margin:16px 0; font-size:17px; font-weight:850; font-style:italic; letter-spacing:-.015em; line-height:1.32; color:var(--otos-paper-ink); }
+
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:13px; margin:11px 0 0; }
+  .card { border-radius:13px; background:var(--otos-paper-2); border:1px solid rgba(70,48,34,.14); padding:15px 17px; }
+  .card .ch { font-size:10px; font-weight:950; letter-spacing:.16em; text-transform:uppercase; color:var(--otos-orange); margin-bottom:10px; }
+  .card ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px; }
+  .card li { font-size:12px; line-height:1.4; color:#241f1a; font-weight:600; display:flex; gap:8px; align-items:flex-start; }
+  .card li .b { flex-shrink:0; font-weight:900; }
+  .isnot .b { color:var(--otos-red); } .is .b { color:var(--otos-green); }
+
+  .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:12px 0 0; }
+  .stat { background:var(--otos-paper-2); border:1px solid rgba(70,48,34,.14); border-radius:14px; padding:18px 16px; }
+  .stat .n { font-size:34px; font-weight:1000; letter-spacing:-.03em; color:var(--otos-orange); line-height:1; }
+  .stat .l { font-size:11.5px; line-height:1.4; color:#3a342e; font-weight:650; margin-top:8px; }
+  .stat .s { display:block; margin-top:7px; font-size:8.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#5a534a; }
+
+  .flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:center; gap:7px; margin:12px 0 0; }
+  .flow .s { background:var(--otos-paper-2); border:1px solid rgba(70,48,34,.16); border-radius:13px; padding:16px 11px; text-align:center; }
+  .flow .s .t { font-size:14px; font-weight:950; color:var(--otos-paper-ink); line-height:1.12; }
+  .flow .s .d { font-size:10px; color:#3a342e; font-weight:600; margin-top:5px; line-height:1.3; }
+  .flow .op { color:var(--otos-orange); font-weight:900; font-size:16px; text-align:center; }
+
+  .vt { width:100%; border-collapse:separate; border-spacing:0; margin:12px 0 0; border:1px solid rgba(70,48,34,.16); border-radius:11px; overflow:hidden; }
+  .vt th { font-size:9px; font-weight:950; letter-spacing:.1em; text-transform:uppercase; padding:9px 12px; text-align:left; background:var(--otos-paper-ink); color:#fff; }
+  .vt th.rec { background:var(--otos-green); } .vt th.adhd { background:var(--otos-red); }
+  .vt td { padding:9px 12px; font-size:11.5px; line-height:1.34; vertical-align:top; border-bottom:1px solid rgba(70,48,34,.1); color:#241f1a; font-weight:600; }
+  .vt tr:last-child td { border-bottom:none; }
+  .vt td.fn { font-weight:900; color:var(--otos-paper-ink); width:21%; }
+  .vt td.rec { width:40%; background:rgba(46,125,50,.05); } .vt td.adhd { width:39%; background:rgba(178,58,46,.05); }
+
+  .callout { border-radius:13px; padding:15px 18px; margin:13px 0 0; background:rgba(242,108,13,.07); border:1px solid rgba(242,108,13,.3); font-size:12.5px; line-height:1.52; font-weight:600; color:var(--otos-paper-ink); }
+  .callout strong { color:var(--otos-orange); font-weight:900; }
+  .callout.dark { background:var(--otos-paper-ink); border:none; color:rgba(255,255,255,.9); }
+  .callout.dark strong { color:var(--otos-orange-2); }
+
+  .partners { display:flex; flex-wrap:wrap; gap:7px; margin:11px 0 0; }
+  .partners .p { font-size:11px; font-weight:800; letter-spacing:.02em; color:var(--otos-paper-ink); background:var(--otos-paper-2); border:1px solid rgba(70,48,34,.18); border-radius:999px; padding:6px 13px; }
+
+  .xc-logo { height:32px; display:block; }
+  .founder { margin:14px 0 0; border-radius:13px; background:var(--otos-paper-ink); padding:16px 19px; }
+  .founder .h { font-size:10px; font-weight:950; letter-spacing:.16em; text-transform:uppercase; color:var(--otos-orange-2); margin-bottom:9px; }
+  .founder p { font-size:12.5px; line-height:1.55; color:rgba(255,255,255,.9); font-weight:550; margin:0; }
+  .founder p strong { color:#fff; font-weight:850; }
+
+  .xcover { padding:0; position:relative; display:block; color:#fff; background:var(--otos-paper-ink); }
+  .xcover .xc-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.58) saturate(1.05) contrast(1.02); }
+  .xcover .xc-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,7,6,.5) 0%, rgba(8,7,6,.32) 30%, rgba(8,7,6,.66) 72%, rgba(8,7,6,.9) 100%); }
+  .xcover .xc-in { position:absolute; inset:0; padding:20mm 19mm; display:flex; flex-direction:column; justify-content:space-between; z-index:1; }
+  .xcover .xc-top { display:flex; justify-content:space-between; align-items:center; }
+  .xcover .xc-top .m { font-size:9.5px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.65); }
+  .xcover .xc-kick { font-size:11px; font-weight:950; letter-spacing:.24em; text-transform:uppercase; color:var(--otos-orange-2); margin-bottom:17px; }
+  .xcover h1 { font-size:50px; font-weight:1000; letter-spacing:-.04em; line-height:1.0; margin:0; color:#fff; max-width:20ch; }
+  .xcover h1 .o { color:var(--otos-orange-2); }
+  .xcover .xc-sub { margin-top:17px; font-size:14px; line-height:1.55; color:rgba(255,255,255,.86); font-weight:550; max-width:54ch; }
+  .xcover .xc-meta { margin-top:19px; display:grid; grid-template-columns:1fr 1fr; gap:8px 26px; max-width:62ch; }
+  .xcover .xc-meta .mi { font-size:11px; color:rgba(255,255,255,.85); font-weight:600; }
+  .xcover .xc-meta .mi .l { display:block; font-size:9px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; color:var(--otos-orange-2); margin-bottom:2px; }
+
+  .foot { display:flex; justify-content:space-between; font-size:9px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:#5a534a; padding-top:11px; border-top:1px solid rgba(70,48,34,.13); margin-top:14px; }
+  .src { font-size:11px; line-height:1.5; color:#3a342e; font-weight:600; font-style:italic; margin-top:11px; }
+  .src strong { font-style:normal; color:var(--otos-paper-ink); font-weight:900; }
+
+  @media print { html,body{ background:#fff; } .doc{ padding:0; gap:0; } .page{ box-shadow:none; } * { -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important; } }
+</style>
+</head>
+<body style="">
+<div class="doc">
+
+  <!-- PAGE 1 — COVER -->
+  <section class="page xcover" data-screen-label="01 · Cover">
+    <img class="xc-img" src="assets/partner-img/03-known-not-held.png" alt="A person waiting alone — known to services, lost between them">
+    <div class="xc-scrim"></div>
+    <div class="xc-in">
+      <div class="xc-top"><img class="xc-logo" src="assets/otos-logo-full-dark.png" alt="OTOS Continuity"><span class="m">Executive overview · Private &amp; confidential</span></div>
+      <div>
+        <span class="xc-kick" style="">The CRISIS &amp; THE opportunity</span>
+        <h1 style="">When ADHD is left waiting,<br><span class="o">addiction steps in.</span><br>And it does not come quietly.</h1>
+        <p class="xc-sub" style="">OTOS Continuity™ is the non-clinical layer that intervenes upstream and earlier for patients with suspected ADHD-driven Addiction. Keeping them visible, held and ensuring the best chance of success in Addiction recovery, OTOS closes the gap where the wait is long, care breaks, relapse happens, cost compounds and lives are lost.</p>
+        <div class="xc-meta">
+          <div class="mi"><span class="l">What</span>A continuity-infrastructure opportunity</div>
+          <div class="mi"><span class="l">Stage</span>Pre-pilot · bounded demonstrator</div>
+          <div class="mi"><span class="l">From</span>Dean Butler — Founder, OTOS Continuity™</div>
+          <div class="mi"><span class="l">Status</span>Exploratory · not a procurement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2 — WHAT IT IS + THE PROBLEM -->
+  <section class="page" data-screen-label="02 · Overview">
+    <div class="brandbar"><img class="blogo" src="assets/otos-logo-full.png" alt="OTOS Continuity"><span class="m">Executive overview · Private &amp; confidential</span></div>
+    <div class="body">
+      <span class="kicker">The opportunity in one line</span>
+      <h1 class="title" style="">Known to every service. Held by none.</h1>
+
+      <p class="lede">OTOS Continuity™ is a non-clinical infrastructure layer that targets a high-cost, high-risk cohort — keeping them visible as they move between NHS and community services, closing the gap where the wait is long, care breaks, relapse happens, cost compounds and lives are lost.</p>
+
+      <p>It is built for a specific, expensive group: adults whose addiction is driven by untreated or under-treated ADHD — a pattern we call <strong>NIA (Neurologically Informed Addiction)</strong>. They are known to services but lost between them, cycling through A&amp;E, addiction services, crisis teams, courts and waiting lists — each seeing a fragment, none holding the thread. OTOS makes that thread visible, <strong style="">without diagnosing, prescribing or touching a single clinical decision</strong>.</p>
+
+      <div class="pull" style=""><span style="font-weight: normal;">“People do not fall through one service. They fall through the gaps between them. Continuity<span style="color: rgb(22, 18, 15); font-size: 19px; font-style: normal; font-weight: 750; letter-spacing: -0.27px;"><span style="font-weight: normal;">™</span></span>&nbsp;holds them.”</span></div>
+
+      <h2 class="sub" style="font-size: 27px;"><span class="n" style="font-size: 37px;">01</span> The problem, precisely</h2>
+      <p style=""><div><br></div>The care exists — the buildings, the teams, the funding all exist. <strong>What is missing is continuity between them, and a way out of the trap.</strong> The person is caught both ways: addiction services cannot move them on while the ADHD is untreated, and the ADHD pathway stalls — or rejects them outright — while substance use is active. So they keep self-medicating. <strong>Repeated, once-successful self-medication is what hardens into addiction when ADHD is left untreated too long.</strong> Meanwhile a referral is made and no one knows if it landed; a person leaves A&amp;E into silence until the next crisis. Every broken thread is an upstream intervention point carrying avoidable cost, repeating in the most expensive settings the system has.</p>
+
+      <div class="callout"><strong>The clinical anchor.</strong> The Royal College of Psychiatrists (CR235) states that significant comorbid substance misuse “should be managed jointly between general adult and addiction services” — yet in practice that joint working rarely happens. And our founder’s own consultant psychiatrist framed his case not as alcoholism, but its driver: he drank <em class="ink" style="font-style:normal;">“to self-medicate inadequately managed ADHD symptoms.”</em> That is the exact pattern OTOS is built around.</div>
+    </div>
+    <div class="foot"><span>OTOS Continuity™ · OTOS Digital Ltd · Co. No. 17084455</span><span>Page 02 / 05</span></div>
+  </section>
+
+  <!-- PAGE 3 — HOW IT SOLVES IT -->
+  <section class="page" data-screen-label="03 · How it works">
+    <div class="brandbar"><img class="blogo" src="assets/otos-logo-full.png" alt="OTOS Continuity"><span class="m">How it works · the mechanism</span></div>
+    <div class="body">
+      <h2 class="sub" style=""><span class="n" style="font-size: 37px;"><br>02&nbsp;<span style="font-size: 37px;"><font color="#211d19" style="font-size: 37px;"><span style="letter-spacing: -0.01em; font-size: 37px;">How it solves the problem</span></font></span></span></h2>
+      <p>OTOS is focused on one thing: catching the <strong>ADHD upstream</strong>. Where ADHD is identified and treated, the brain can finally use the recovery work the system already funds. OTOS sits <strong>around</strong> existing services — not replacing or integrating with NHS systems — and holds the person on the thread through that window, so the addiction support, when it comes, lands on a brain that can take it. At each touchpoint (a referral, a discharge, a session, a check-in) staff log a quick, anonymous signal; OTOS turns those into a receipted thread and surfaces drift — silence, a missed follow-through, a cooling contact — so a named human can act <em class="ink" style="font-style:normal;">before</em> the next crisis. <strong>OTOS follows the person, not the silo</strong> — Continuity™ could be considered the new, digital waiting room: not passive waiting, but an active holding layer that keeps the person connected until the clinical route catches up.</p>
+
+      <p>The thread is woven from real, daily contact: <strong>RCE ADHD waiting-well classes</strong> and active-waiting sessions, plus light, <strong>permission-based mobile check-ins</strong> the person opts into. Every interaction is an <strong>encrypted, consent-based digital signal</strong> — so a keyworker sees, across their whole caseload, who is still engaged and who is quietly slipping, without chasing or guesswork. It lightens the caseload rather than adding to it.</p>
+
+      <div class="flow">
+        <div class="s"><div class="t">Touchpoint</div><div class="d">logged in seconds, anonymously</div></div>
+        <div class="op">→</div>
+        <div class="s"><div class="t">Receipt</div><div class="d">did the next step land?</div></div>
+        <div class="op">→</div>
+        <div class="s"><div class="t">Drift &amp; review</div><div class="d">silence surfaces for a human</div></div>
+      </div>
+
+      <h2 class="sub" style="font-size: 37px;"><span class="n" style="font-size: 37px;">03</span> Why the order matters</h2>
+      <p>Addiction recovery asks for the exact capacities unmanaged ADHD strips away. Treat the driver first, and the same support the system already funds finally lands.</p>
+      <table class="vt">
+        <thead><tr><th class="fn">Capacity</th><th class="rec">Recovery requires</th><th class="adhd">Unmanaged ADHD takes away</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Focus</td><td class="rec">Sustained attention through therapy &amp; recovery work</td><td class="adhd">Chronic distractibility</td></tr>
+          <tr><td class="fn">Working memory</td><td class="rec">Holding tools, keeping appointments</td><td class="adhd">Forgets, misses, loses the thread</td></tr>
+          <tr><td class="fn">Impulse control</td><td class="rec">Pausing, resisting cravings in the moment</td><td class="adhd">Reflexive, immediate urges</td></tr>
+          <tr><td class="fn">Routine</td><td class="rec">Repetition that physically rebuilds pathways</td><td class="adhd">Can’t initiate or sustain routine</td></tr>
+        </tbody>
+      </table>
+      <p class="src"><strong>Medication opens the window; OTOS keeps it open.</strong> A targeted, almost surgical approach to one specific cohort — ADHD-driven addiction — not a generic tool. For very little investment, it could save billions and lift addiction-service outcomes materially. (The full clinical breakdown sits in the accompanying Evidence Dossier.)</p>
+    </div>
+    <div class="foot"><span>OTOS Continuity™ · OTOS Digital Ltd · Co. No. 17084455</span><span>Page 03 / 05</span></div>
+  </section>
+
+  <!-- PAGE 4 — SCOPE + TEST + EVIDENCE + SAVINGS -->
+  <section class="page" data-screen-label="04 · Scope, test &amp; evidence">
+    <div class="brandbar"><img class="blogo" src="assets/otos-logo-full.png" alt="OTOS Continuity"><span class="m">Scope · the test · the evidence</span></div>
+    <div class="body">
+      <h2 class="sub" style="font-size: 37px;"><span class="n" style="font-size: 37px;"><br>04&nbsp;<span style="color: rgb(33, 29, 25); letter-spacing: -0.01em;">What it is — and is not</span></span></h2>
+      <div class="two">
+        <div class="card isnot">
+          <div class="ch">What OTOS Continuity™ is not</div>
+          <ul>
+            <li><span class="b">×</span> Not an electronic patient record</li>
+            <li><span class="b">×</span> Not a diagnostic platform</li>
+            <li><span class="b">×</span> Not a prescribing system</li>
+            <li><span class="b">×</span> Not a clinical decision-support tool</li>
+            <li><span class="b">×</span> Not a replacement for any existing service</li>
+            <li><span class="b">×</span> Not surveillance — encrypted, tokenised IDs</li>
+            <li><span class="b">×</span> Not new clinical risk or extra caseload</li>
+            <li><span class="b">×</span> Not asking staff to change how they work</li>
+          </ul>
+        </div>
+        <div class="card is">
+          <div class="ch">What OTOS Continuity™ does</div>
+          <ul>
+            <li><span class="b">✓</span> Logs handoffs and touchpoints in seconds</li>
+            <li><span class="b">✓</span> Creates timestamped transition receipts</li>
+            <li><span class="b">✓</span> Surfaces early drift signals for human review</li>
+            <li><span class="b">✓</span> Encrypted, permission-based — the person opts in</li>
+            <li><span class="b">✓</span> Lightens keyworker caseloads, never adds to them</li>
+            <li><span class="b">✓</span> Maintains a continuity audit trail</li>
+            <li><span class="b">✓</span> Makes disengagement visible before crisis</li>
+            <li><span class="b">✓</span> Leaves every clinical decision with partner teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="sub" style="font-size: 37px;"><span class="n" style="font-size: 37px;">05&nbsp;<span style="color: rgb(33, 29, 25); letter-spacing: -0.01em; font-size: 37px;">&nbsp; The test and the evidence behind it</span></span></h2>
+      <p style="">We are not asking anyone to fund a rollout — the first step is a small, surgical, stoppable demonstrator that proves or disproves the model with locally validated evidence, in <strong>Cambridgeshire &amp; Peterborough</strong> alongside named local partners. Early conversations are already open, <strong>including with Public Health at the local authority</strong>, who recognised the need — though no funding is available immediately.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="n">50</div><div class="l">people, picked with partners from the highest-cost cohort</div></div>
+        <div class="stat"><div class="n">12</div><div class="l">weeks, Cambridgeshire &amp; Peterborough</div></div>
+        <div class="stat"><div class="n">~£150k</div><div class="l">pre-pilot demonstrator build<span class="s">Subject to requote</span></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="n">23–45%</div><div class="l">ADHD prevalence in addiction-treatment cohorts<span class="s">RCPsych CR235</span></div></div>
+        <div class="stat"><div class="n">£17bn</div><div class="l">avoidable annual cost of unsupported ADHD<span class="s">NHS ADHD Taskforce 2025</span></div></div>
+        <div class="stat"><div class="n">61.3%</div><div class="l">improvement in addictive disorders after ADHD treatment<span class="s">START · comparator</span></div></div>
+      </div>
+      <p class="src" style="font-size: 13px;"><div><br></div>NICE NG87 confirms ADHD assessment is appropriate during active substance misuse; RCPsych supports joint management. A large Swedish study (n≈148,581, reported via New Scientist) links ADHD medication to lower substance-misuse, suicidality, accident and criminality rates. <strong style="font-size: 13px;"><br><br>These frame the opportunity; the demonstrator exists to test it locally.</strong></p>
+    </div>
+    <div class="foot"><span>Private discovery overview · Not a pitch · No procurement</span><span>Page 04 / 05</span></div>
+  </section>
+
+  <!-- PAGE 5 — SAVINGS + TRACTION + OPPORTUNITY + ASK + FOUNDER -->
+  <section class="page" data-screen-label="05 · Opportunity &amp; ask">
+    <div class="brandbar"><img class="blogo" src="assets/otos-logo-full.png" alt="OTOS Continuity"><span class="m">Savings · traction · the ask</span></div>
+    <div class="body">
+      <h2 class="sub" style="font-size: 17px;"><span class="n" style="font-size: 37px;"><br>06&nbsp;<span style="color: rgb(33, 29, 25); font-size: 37px; letter-spacing: -0.01em;">The savings logic and why now</span></span></h2>
+      <p>The cost of this cohort does not disappear when it is unaddressed — <strong>it moves to a worse budget line</strong>: A&amp;E, ICU, criminal justice, repeat detox and rehab. Treat the driver and hold the thread, and that spend can be interrupted before it compounds.</p>
+      <div class="callout"><strong>Modelled, local, labelled:</strong> an estimated ≈877 adults locally sit in this ADHD-driven cohort (4,175 in treatment × 21% prevalence), with ≈£18m in modelled avoidable annual demand. For roughly the cost of one late, high-cost collapse, the demonstrator tests whether earlier continuity changes the trajectory across 50 people. <em class="ink" style="font-style:normal;">All figures are modelled potential, not guaranteed cash.</em></div>
+
+      <h2 class="sub" style="font-size: 37px;"><span class="n" style="font-size: 37px;">07&nbsp;<span style="color: rgb(33, 29, 25); letter-spacing: -0.01em; font-size: 37px;">Traction &amp; why the timing is strong</span></span></h2>
+      <p style=""><div><br></div>Early conversations are underway across the local pathway — each partner has its own tailored brief:</p>
+      <div class="partners">
+        <span class="p">CPFT ADHD Team</span><span class="p">Change Grow Live</span><span class="p">Cambridgeshire Recovery Service</span><span class="p">Addenbrooke’s Alcohol Liaison</span><span class="p">RCE Wellbeing</span><span class="p">Mind / WorkWell</span><span class="p">Public Health (Cambs CC)</span>
+      </div>
+      <p style="margin-top:10px;">Two things sharpen the timing. <strong>Change Grow Live’s own national position already names neurodivergence as central to addiction</strong> — so this aligns with where the sector is publicly moving. And despite NICE NG87 and RCPsych guidance, <strong>no ADHD team is yet actively running this joint pathway with addiction services.</strong> The first to do it becomes the national pioneer — adhering to guidance the system already endorses, while saving lives and money.</p>
+
+      <h2 class="sub" style=""><span class="n" style="font-size: 37px;">08&nbsp;<span style="color: rgb(33, 29, 25); font-size: 37px; letter-spacing: -0.01em;">The opportunity — and the ask</span></span></h2>
+      <p>NIA is a proposed category with no current owner; a pathway-recognition submission to the Royal College of Psychiatrists is in progress. For a strategic partner the opportunity is not a molecule — it is to <strong>help evidence the signal and shape the category</strong> before it becomes a market: the continuity layer the whole ADHD-and-addiction pathway will run on.</p>
+      <div class="callout dark" style=""><strong>An open strategic question.</strong> If the NHS route does not progress, a private direct-to-consumer model exists — but it means employing psychiatrists, significant marketing spend and it would miss the people struggling inside the NHS system. We see the NHS path as the right first play; the D2C option is flagged as a larger commercial route worth direction, not a decision made.</div>
+      <p style="margin-top: 10px;"><strong>The ask is small:</strong> a conversation about whether this is worth scoping — and if so, support to build and run the bounded demonstrator that turns the thesis into evidence. Nothing here assumes endorsement; OTOS surfaces signals, partner teams make every decision.</p>
+
+      <div class="founder">
+        <div class="h">Why this is founder-led</div>
+        <p>I am not a detached observer of this problem — I am the proof of it. Thirty-five years self-medicating undiagnosed ADHD took me through A&amp;E, ICU, a suicide attempt, dayhabs, rehabs and the brink of death more than once. The system treated the addiction over and over while the driver underneath sat untreated on a medication-review waiting list — I am still on that list. After a final relapse, convinced it was the ADHD, I went private, finally got medicated, and <strong>everything changed within hours</strong>. <strong>OTOS exists because that should not have taken me to the edge of death to discover — and because, caught earlier, it is avoidable. It can be avoided for the next person.</strong></p>
+      </div>
+    </div>
+    <div class="foot"><span>Dean Butler · Founder, OTOS Continuity · dean@otos.life · 07585 899 235</span><span>Page 05 / 05</span></div>
+  </section>
+
+</div>
+
+</body></html>
