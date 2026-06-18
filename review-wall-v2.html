@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>OTOS Family — Review Wall v2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root { --s: 0.34; --accent:#f26c0d; --ok:#35d07f; --warn:#f7c948; --bad:#ff5a5f; --ink:#f4efe6; --muted:#aeb4c0; --bg:#14110e; --panel:#0f0c0a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; background: var(--bg); font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); }
+  body { overflow: auto; }
+
+  .bar {
+    position: sticky; top: 0; z-index: 80;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+    padding: 10px 16px; background: rgba(15,12,10,.96); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .brand { font-weight: 950; letter-spacing: -.01em; font-size: 15px; white-space: nowrap; }
+  .brand span { color: var(--accent); }
+  .subline { font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-top: 2px; }
+  .prog { font-size: 11px; font-weight: 900; letter-spacing: .04em; color: var(--ok); white-space: nowrap; }
+
+  .controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .controls label { font-size:10px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  select, button, input[type=range] { font: inherit; }
+  select {
+    background: rgba(255,255,255,.08); color: var(--ink); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px; padding: 7px 12px; font-size: 11px; font-weight: 850; outline: none;
+  }
+  select option { color:#111; }
+  button {
+    font-size: 10.5px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  }
+  button:hover { background: rgba(242,108,13,.2); border-color: rgba(242,108,13,.5); }
+  button.danger:hover { background: rgba(255,90,95,.18); border-color: rgba(255,90,95,.55); }
+  input[type=range] { width: 150px; accent-color: var(--accent); }
+
+  .help {
+    position: sticky; top: 56px; z-index: 60;
+    display:flex; align-items:center; gap:12px; padding: 8px 16px;
+    background: rgba(20,17,14,.92); border-bottom:1px solid rgba(255,255,255,.08);
+    font-size: 11px; color: var(--muted); font-weight: 700;
+  }
+  .help strong { color: var(--accent); }
+  .help code { color: var(--ink); background: rgba(255,255,255,.08); padding:2px 6px; border-radius:6px; }
+  .lastcopy { margin-left:auto; color:var(--ok); font-size:10px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; display:none; }
+
+  .wall { display: flex; gap: 18px; padding: 18px 20px 80px; align-items: flex-start; width: max-content; }
+  .col { flex: 0 0 auto; }
+  .col .head {
+    position: sticky; top: 92px; z-index: 40; background: rgba(20,16,13,.98); backdrop-filter: blur(8px);
+    padding: 9px 12px; border-radius: 10px 10px 0 0; border: 1px solid rgba(255,255,255,.12); border-bottom: none;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 0;
+  }
+  .col .head .tx { display: flex; flex-direction: column; gap: 2px; min-width:0; }
+  .col .head .t { font-size: 12px; font-weight: 900; letter-spacing: -.01em; line-height: 1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:210px; }
+  .col .head .m { font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .col .head .cprog { margin-left: auto; font-size: 9.5px; font-weight: 900; letter-spacing: .04em; color: var(--muted); white-space: nowrap; }
+  .col .head .cprog.done { color: var(--ok); }
+
+  .frame-wrap { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-top: none; background: #0c0a08; border-radius: 0 0 10px 10px; }
+  .frame-wrap iframe { border: 0; transform-origin: top left; background: #2a2a2a; display: block; }
+
+  .ov { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  .pg { position: absolute; left: 0; pointer-events: none; }
+  .pg .wash { position: absolute; inset: 0; pointer-events: none; transition: background .15s, box-shadow .15s; background: rgba(20,16,13,.32); }
+  .pg.marked .wash { background: rgba(53,208,127,.13); box-shadow: inset 0 0 0 2px var(--pass-color, var(--ok)); }
+  .pg.needsRebuild.marked .wash, .pg.doNotUse.marked .wash { background: rgba(255,90,95,.12); }
+  .pg .tick {
+    position: absolute; top: 8px; right: 8px; min-width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto;
+    background: rgba(15,12,10,.84); border: 1.5px solid rgba(255,255,255,.4); backdrop-filter: blur(4px);
+    color: transparent; font-size: 15px; font-weight: 900; line-height: 1; transition: all .15s; padding:0 6px;
+  }
+  .pg .tick:hover { border-color: var(--pass-color, var(--ok)); }
+  .pg.marked .tick { background: var(--pass-color, var(--ok)); border-color: var(--pass-color, var(--ok)); color: #06160c; }
+  .pg.needsRebuild.marked .tick, .pg.doNotUse.marked .tick { color:#210708; }
+  .pg .num {
+    position: absolute; top: 8px; left: 8px; font-size: 10px; font-weight: 900; letter-spacing: .04em;
+    background: rgba(15,12,10,.82); color: var(--ink); padding: 4px 7px; border-radius: 6px; pointer-events: none;
+    border: 1px solid rgba(255,255,255,.18);
+  }
+  .pg.marked .num { color: var(--pass-color, var(--ok)); border-color: color-mix(in srgb, var(--pass-color, var(--ok)) 55%, transparent); }
+  .pg .badges { position:absolute; left:8px; bottom:8px; display:flex; gap:4px; flex-wrap:wrap; max-width:80%; pointer-events:none; }
+  .badge { font-size:8px; font-weight:950; letter-spacing:.05em; text-transform:uppercase; color:#070503; background:var(--ok); border-radius:999px; padding:3px 6px; opacity:.95; }
+
+  .col .open { display:block; margin-top:8px; text-align:center; font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); text-decoration:none; padding:6px; border:1px solid rgba(255,255,255,.12); border-radius:8px; }
+  .col .open:hover { color:var(--ink); border-color:rgba(242,108,13,.5); }
+
+  .modal {
+    position: fixed; inset: 0; z-index: 120; display:none; align-items:center; justify-content:center;
+    background: rgba(0,0,0,.65); padding: 28px;
+  }
+  .modal.on { display:flex; }
+  .box { width:min(980px, 96vw); max-height:86vh; display:flex; flex-direction:column; gap:10px; background:#17120e; border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:16px; box-shadow:0 30px 100px rgba(0,0,0,.55); }
+  .box h2 { font-size:16px; letter-spacing:-.02em; }
+  .box p { color:var(--muted); font-size:12px; line-height:1.45; }
+  textarea { width:100%; min-height:55vh; resize:vertical; background:#090706; color:#fff; border:1px solid rgba(255,255,255,.14); border-radius:10px; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:11px; line-height:1.45; }
+  .box .row { display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+
+  @media (max-width: 900px) {
+    .bar { grid-template-columns: 1fr; align-items:flex-start; }
+    .controls { justify-content:flex-start; }
+    .help { top: auto; position:relative; flex-wrap:wrap; }
+    .col .head { top: 0; }
+  }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div>
+      <div class="brand">OTOS Family — <span>Review Wall v2</span></div>
+      <div class="subline">multi-pass ticks · exportable review data</div>
+    </div>
+    <div class="prog" id="prog">0 / 0 marked</div>
+    <div class="controls">
+      <label for="passSel">Pass</label>
+      <select id="passSel"></select>
+      <button id="copyTableBtn">Copy table</button>
+      <button id="copyJsonBtn">Copy JSON</button>
+      <button id="viewExportBtn">View export</button>
+      <button id="clearPassBtn" class="danger">Clear pass</button>
+      <button id="clearAllBtn" class="danger">Clear all</button>
+      <button id="fitBtn">Reset zoom</button>
+      <label for="zoom">Zoom</label>
+      <input id="zoom" type="range" min="0.18" max="0.92" step="0.02" value="0.34" />
+    </div>
+  </div>
+
+  <div class="help">
+    <span><strong>How to use:</strong> choose a pass, tick pages, then <code>Copy table</code> or <code>Copy JSON</code> and paste it into ChatGPT.</span>
+    <span>Suggested sweeps: background image → layout → text density → evidence pages → ask pages.</span>
+    <span id="lastcopy" class="lastcopy">Copied</span>
+  </div>
+
+  <div class="wall" id="wall"></div>
+
+  <div class="modal" id="modal">
+    <div class="box">
+      <h2>Review export</h2>
+      <p>Copy this and paste it into ChatGPT. JSON gives the richest data; table is easiest to read.</p>
+      <textarea id="exportText"></textarea>
+      <div class="row">
+        <button id="modalCopyBtn">Copy shown text</button>
+        <button id="downloadBtn">Download JSON</button>
+        <button id="closeModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const PAGE_W = 794, PAGE_H = 1123, GAP = 18, PAD = 30;
+  const DOCS = [
+    { f: "OTOS NIA Paper v3.html", n: "NIA Paper", m: "Parent · 23pp", p: 23 },
+    { f: "OTOS Angel Brief v3.html", n: "Angel / Funder Brief", m: "Investor · 13pp", p: 13 },
+    { f: "OTOS Executive Overview.html", n: "Executive Overview", m: "Elevator · 5pp", p: 5 },
+    { f: "AZ NIA Master Brief v3.html", n: "AstraZeneca Master Brief", m: "Benchmark · 22pp", p: 22 },
+    { f: "OTOS Evidence Dossier v2.html", n: "Evidence Dossier", m: "Proof vault · 10pp", p: 10 },
+    { f: "ADHD Team Project Brief v1.html", n: "ADHD Team", m: "Clinical · 11pp", p: 11 },
+    { f: "CGL and CRS Team Leaders Brief v3.html", n: "CGL & CRS", m: "Partner · 11pp", p: 11 },
+    { f: "Alcohol Liaison Bedside Brief v3.html", n: "Alcohol Liaison", m: "Partner · 11pp", p: 11 },
+    { f: "Dr Claire Gillvray LAMP Strategic Ally Brief v3.html", n: "Dr Claire / LAMP", m: "Ally · 12pp", p: 12 },
+    { f: "RCE Wellbeing Hub Partner Brief v3.html", n: "RCE Wellbeing Hub", m: "Partner · 11pp", p: 11 },
+    { f: "Mind WorkWell Therapy Partner Brief v3.html", n: "Mind / WorkWell", m: "Partner · 11pp", p: 11 },
+    { f: "Public Health Cost Case Brief v3.html", n: "Public Health Cost Case", m: "Commissioner · 12pp", p: 12 },
+    { f: "Champion Brief v3.html", n: "Champion Brief", m: "Champion · 8pp", p: 8 }
+  ];
+
+  const PASSES = [
+    { key:'general', label:'General approval', short:'GEN', color:'#35d07f' },
+    { key:'background', label:'Background image', short:'IMG', color:'#54d2ff' },
+    { key:'layout', label:'Layout', short:'LAY', color:'#b48cff' },
+    { key:'textDensity', label:'Text density', short:'TXT', color:'#f7c948' },
+    { key:'cover', label:'Cover page', short:'COV', color:'#f26c0d' },
+    { key:'evidenceStats', label:'Evidence / stats page', short:'EV', color:'#50e3c2' },
+    { key:'partnerPage', label:'Partner-specific page', short:'PAR', color:'#7ed957' },
+    { key:'askPage', label:'Ask / next step page', short:'ASK', color:'#ffb703' },
+    { key:'founderPage', label:'Founder proof page', short:'FDR', color:'#ff8fab' },
+    { key:'needsRebuild', label:'Needs rebuild', short:'FIX', color:'#ff5a5f' },
+    { key:'doNotUse', label:'Do not use', short:'NO', color:'#ff3838' }
+  ];
+
+  const LS_KEY = "otos-review-passes-v2";
+  let review = {};
+  try { review = JSON.parse(localStorage.getItem(LS_KEY) || "{}"); } catch(e) { review = {}; }
+  for (const p of PASSES) if (!review[p.key]) review[p.key] = {};
+
+  const passSel = document.getElementById('passSel');
+  PASSES.forEach(p => {
+    const o = document.createElement('option'); o.value = p.key; o.textContent = p.label; passSel.appendChild(o);
+  });
+  let currentPass = passSel.value || PASSES[0].key;
+
+  const keyFor = (f, k) => f + "##" + k;
+  const passMeta = key => PASSES.find(p => p.key === key) || PASSES[0];
+  function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(review)); } catch(e) {} }
+
+  const wall = document.getElementById('wall');
+  const cols = [];
+  let totalPages = 0;
+
+  function markedPasses(f, k) {
+    const kk = keyFor(f, k);
+    return PASSES.filter(p => review[p.key] && review[p.key][kk]);
+  }
+
+  for (const d of DOCS) {
+    totalPages += d.p;
+    const docH = d.p * PAGE_H + (d.p - 1) * GAP + PAD * 2;
+    const col = document.createElement('div');
+    col.className = 'col';
+    col.innerHTML =
+      '<div class="head"><div class="tx"><div class="t">' + d.n + '</div><div class="m">' + d.m + '</div></div><div class="cprog"></div></div>' +
+      '<div class="frame-wrap"><iframe scrolling="no"></iframe><div class="ov"></div></div>' +
+      '<a class="open" href="' + encodeURI(d.f) + '" target="_blank" rel="noopener">Open full ↗</a>';
+    wall.appendChild(col);
+    const fr = col.querySelector('iframe'); fr.src = d.f;
+    const ov = col.querySelector('.ov');
+    const pgs = [];
+    for (let k = 1; k <= d.p; k++) {
+      const pg = document.createElement('div');
+      pg.className = 'pg';
+      pg.innerHTML = '<div class="wash"></div><div class="num">' + String(k).padStart(2,'0') + '</div><div class="tick">✓</div><div class="badges"></div>';
+      const tick = pg.querySelector('.tick');
+      tick.addEventListener('click', () => {
+        const kk = keyFor(d.f, k);
+        if (!review[currentPass]) review[currentPass] = {};
+        if (review[currentPass][kk]) delete review[currentPass][kk];
+        else review[currentPass][kk] = { doc: d.n, file: d.f, page: k, markedAt: new Date().toISOString() };
+        save(); renderMarks(); updateProg();
+      });
+      ov.appendChild(pg); pgs.push(pg);
+    }
+    cols.push({ el: col, wrap: col.querySelector('.frame-wrap'), frame: fr, ov, pgs, docH, d, cprog: col.querySelector('.cprog') });
+  }
+
+  function apply(s) {
+    document.documentElement.style.setProperty('--s', s);
+    for (const c of cols) {
+      c.frame.style.width = PAGE_W + 'px';
+      c.frame.style.height = c.docH + 'px';
+      c.frame.style.transform = 'scale(' + s + ')';
+      c.wrap.style.width = (PAGE_W * s) + 'px';
+      c.wrap.style.height = (c.docH * s) + 'px';
+      c.el.style.width = (PAGE_W * s) + 'px';
+      c.pgs.forEach((pg, i) => {
+        pg.style.top = ((PAD + i * (PAGE_H + GAP)) * s) + 'px';
+        pg.style.width = (PAGE_W * s) + 'px';
+        pg.style.height = (PAGE_H * s) + 'px';
+      });
+    }
+  }
+
+  function renderMarks() {
+    const meta = passMeta(currentPass);
+    document.documentElement.style.setProperty('--pass-color', meta.color);
+    for (const c of cols) {
+      c.pgs.forEach((pg, i) => {
+        const page = i + 1;
+        const kk = keyFor(c.d.f, page);
+        const isMarked = !!(review[currentPass] && review[currentPass][kk]);
+        pg.classList.toggle('marked', isMarked);
+        pg.classList.toggle('needsRebuild', currentPass === 'needsRebuild');
+        pg.classList.toggle('doNotUse', currentPass === 'doNotUse');
+        const badges = pg.querySelector('.badges'); badges.innerHTML = '';
+        markedPasses(c.d.f, page).forEach(p => {
+          const b = document.createElement('span');
+          b.className = 'badge'; b.textContent = p.short; b.style.background = p.color;
+          badges.appendChild(b);
+        });
+      });
+    }
+  }
+
+  function updateProg() {
+    const data = review[currentPass] || {};
+    let done = 0;
+    for (const c of cols) {
+      let cd = 0;
+      for (let k = 1; k <= c.d.p; k++) if (data[keyFor(c.d.f, k)]) cd++;
+      done += cd;
+      c.cprog.textContent = cd + ' / ' + c.d.p;
+      c.cprog.classList.toggle('done', cd === c.d.p && c.d.p > 0);
+    }
+    document.getElementById('prog').textContent = passMeta(currentPass).label + ': ' + done + ' / ' + totalPages + ' marked';
+  }
+
+  function currentRows() {
+    const rows = [];
+    const data = review[currentPass] || {};
+    for (const d of DOCS) {
+      for (let k = 1; k <= d.p; k++) {
+        const kk = keyFor(d.f, k);
+        if (data[kk]) rows.push({ pass: currentPass, pass_label: passMeta(currentPass).label, doc: d.n, file: d.f, page: k, key: kk });
+      }
+    }
+    return rows;
+  }
+
+  function allRows() {
+    const rows = [];
+    for (const p of PASSES) {
+      const data = review[p.key] || {};
+      for (const d of DOCS) {
+        for (let k = 1; k <= d.p; k++) {
+          const kk = keyFor(d.f, k);
+          if (data[kk]) rows.push({ pass: p.key, pass_label: p.label, doc: d.n, file: d.f, page: k, key: kk });
+        }
+      }
+    }
+    return rows;
+  }
+
+  function makeJson() {
+    return JSON.stringify({
+      export_type: 'OTOS Review Wall v2',
+      exported_at: new Date().toISOString(),
+      current_pass: currentPass,
+      current_pass_label: passMeta(currentPass).label,
+      repo: 'otoslifeproject-cell/otos-pdfs',
+      source_page: 'review-wall-v2.html',
+      current_pass_rows: currentRows(),
+      all_rows: allRows(),
+      raw_review_state: review
+    }, null, 2);
+  }
+
+  function makeTable() {
+    const rows = currentRows();
+    let out = '# OTOS Review Wall v2 — ' + passMeta(currentPass).label + '\n\n';
+    out += 'Exported: ' + new Date().toISOString() + '\n\n';
+    out += '| Pass | Document | Page | File |\n|---|---|---:|---|\n';
+    for (const r of rows) out += '| ' + r.pass_label + ' | ' + r.doc + ' | ' + r.page + ' | `' + r.file + '` |\n';
+    if (!rows.length) out += '| ' + passMeta(currentPass).label + ' | No pages marked | — | — |\n';
+    return out;
+  }
+
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); }
+    catch(e) {
+      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    }
+    const lc = document.getElementById('lastcopy'); lc.style.display = 'block'; setTimeout(() => lc.style.display = 'none', 1400);
+  }
+
+  function showModal(text) { document.getElementById('exportText').value = text; document.getElementById('modal').classList.add('on'); }
+
+  passSel.addEventListener('change', () => { currentPass = passSel.value; renderMarks(); updateProg(); });
+  document.getElementById('zoom').addEventListener('input', e => apply(parseFloat(e.target.value)));
+  document.getElementById('fitBtn').addEventListener('click', () => { const z = document.getElementById('zoom'); z.value = 0.34; apply(0.34); });
+  document.getElementById('copyJsonBtn').addEventListener('click', () => copyText(makeJson()));
+  document.getElementById('copyTableBtn').addEventListener('click', () => copyText(makeTable()));
+  document.getElementById('viewExportBtn').addEventListener('click', () => showModal(makeJson()));
+  document.getElementById('modalCopyBtn').addEventListener('click', () => copyText(document.getElementById('exportText').value));
+  document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('modal').classList.remove('on'));
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const blob = new Blob([makeJson()], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'otos-review-wall-v2-export-' + currentPass + '.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('clearPassBtn').addEventListener('click', () => {
+    if (!confirm('Clear all ticks for current pass: ' + passMeta(currentPass).label + '?')) return;
+    review[currentPass] = {}; save(); renderMarks(); updateProg();
+  });
+  document.getElementById('clearAllBtn').addEventListener('click', () => {
+    if (!confirm('Clear ALL review passes?')) return;
+    review = {}; for (const p of PASSES) review[p.key] = {}; save(); renderMarks(); updateProg();
+  });
+
+  apply(0.34); renderMarks(); updateProg();
+</script>
+</body>
+</html>
